@@ -1,0 +1,22 @@
+.NewMyPlaceToilet {
+    background-color: white;
+    max-width: 478px;
+    height: 100vh;
+}
+
+body p {
+    margin-bottom: 0;
+}
+
+.bar {
+    margin: 0px;
+}
+
+.inputName {
+    display: flex;
+    margin: 10px 0px;
+}
+
+.necessary {
+    color: #2CB3FF;    ;
+}
