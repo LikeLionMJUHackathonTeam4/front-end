@@ -1,0 +1,33 @@
+.InfoTab {
+    width: 478px;
+    height: 290px;
+    flex-shrink: 0;
+    border-radius: 17px 17px 0px 0px;
+    background: var(--White, #FFF);
+    position : fixed;
+    bottom : 0;
+}
+
+.InfoTitle {
+    display: flex;
+}
+
+.address button {
+    border: none;
+    background-color: transparent;
+}
+
+.InfoButton button {
+    border: none;
+    background-color: transparent;
+}
+
+.MoreInfo {
+    background-color: transparent;
+    border: none;
+    color: var(--Skyblue, #2CB3FF);
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}

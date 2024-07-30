@@ -1,0 +1,34 @@
+.Navbar {
+    width: 478px;
+    height: 117px;
+    flex-shrink: 0;
+    background: var(--White, #FFF);
+    position : fixed;
+    bottom : 0;
+    display: flex;
+}
+
+.bookmarkNav {
+    border: none;
+    background-color: #FFF;
+    margin: auto;
+}
+
+.home {
+    border: none;
+    background-color: #FFF;
+    margin: auto;
+}
+
+.mypage {
+    border: none;
+    background-color: #FFF;
+    margin: auto;
+}
+
+.gps {
+    border: none;
+    background-color: transparent;
+    display: flex;
+    justify-content: right;
+}
