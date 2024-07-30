@@ -1,0 +1,51 @@
+.inputFormToilet {
+    display: flex;
+    flex-direction: column;
+    margin: 0px 20px;
+}
+
+.name {
+    height: 45px;
+    border-radius: 5px;
+    border: 1px solid gray;
+    margin-bottom: 5px;
+}
+
+.location {
+    height: 45px;
+    border-radius: 5px;
+    border: 1px solid gray;
+    margin-bottom: 5px;
+}
+
+.password {
+    height: 45px;
+    border-radius: 5px;
+    border: 1px solid gray;
+    margin-bottom: 5px;
+
+}
+
+.opentime {
+    height: 45px;
+    border-radius: 5px;
+    border: 1px solid gray;
+    margin-bottom: 5px;
+
+}
+
+.toiletpaper {
+    height: 45px;
+    border-radius: 5px;
+    border: 1px solid gray;
+    margin-bottom: 5px;
+
+}
+
+.memo {
+    height: 45px;
+    border-radius: 5px;
+    border: 1px solid gray;
+    margin-bottom: 5px;
+
+}

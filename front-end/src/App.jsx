@@ -8,6 +8,7 @@ import Review from './pages/Review'
 import NewReview from './pages/NewReview'
 import EditReview from './pages/EditReview'
 import MyPlace from './pages/MyPlace'
+import MyPlaceSmoking from './pages/MyPlaceSmoking'
 import SelectMyPlaceToilet from './pages/SelectMyPlaceToilet'
 import SelectMyPlaceSmoking from './pages/SelectMyPlaceSmoking'
 import NewMyPlaceToilet from './pages/NewMyPlaceToilet'
@@ -33,6 +34,7 @@ function App() {
         <Route path='/editreview' element={<EditReview />} />
         {/* 내 장소 목록 화면 */}
         <Route path='/myplace' element={<MyPlace />} />
+        <Route path='/myplacesmoking' element={<MyPlaceSmoking />} />
         <Route path='/selectmyplacetoilet' element={<SelectMyPlaceToilet />} />
         <Route path='/selectmyplacesmoking' element={<SelectMyPlaceSmoking />} />
         <Route path='/newmyplacetoilet' element={<NewMyPlaceToilet />} />

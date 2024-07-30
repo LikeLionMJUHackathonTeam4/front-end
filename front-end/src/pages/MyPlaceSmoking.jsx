@@ -1,10 +1,10 @@
-import '../styles/MyPlace.css';
+import '../styles/MyPlaceSmoking.css';
 import CustomButton from '../components/CustomButton'
 import Header from '../components/Header';
 
-const MyPlace = () => {
+const MyPlaceSmoking = () => {
     return (
-        <div className='MyPlace'>
+        <div className="MyPlaceSmoking">
             <Header
                 title={'내 장소 목록'}
                 leftChild={<CustomButton onClick={() => nav(-1)} text={<svg xmlns="http://www.w3.org/2000/svg" width="10" height="20" viewBox="0 0 13 24" fill="none">
@@ -14,14 +14,15 @@ const MyPlace = () => {
             />
 
             <div className='choosePlace'>
-                <p className='toilet'>화장실</p>
-                <p className='Mysmoking'>흡연구역</p>
+                <p className='Mytoilet'>화장실</p>
+                <p className='smoking'>흡연구역</p>
             </div>
             <div className='nav-bar'>
-                <svg width="478" height="2" viewBox="0 0 478 2" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <line y1="1" x2="478.004" y2="1" stroke="#E9E9EB" strokeWidth="2"/>
-                <path d="M102.002 1L134.002 1" stroke="black" strokeWidth="2" strokeLinecap="round"/>
-                </svg>
+            <svg width="478" height="3" viewBox="0 0 478 3" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <line y1="1" x2="478.004" y2="1" stroke="#E9E9EB" strokeWidth="2"/>
+            <path d="M342 2L374 2" stroke="black" strokeWidth="2" strokeLinecap="round"/>
+            </svg>
+
             </div>
 
             <div className='sort-bar'>
@@ -54,4 +55,4 @@ const MyPlace = () => {
     )
 }
 
-export default MyPlace;
+export default MyPlaceSmoking;

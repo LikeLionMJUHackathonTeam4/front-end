@@ -1,0 +1,35 @@
+.MyPlaceSmoking {
+    background-color: white;
+    max-width: 478px;
+    height: 100vh;
+}
+
+.choosePlace {
+    padding: 0;
+    display: flex;
+    
+    justify-content: space-around;;
+    max-width: 478px;
+}
+
+.Mytoilet {
+    color: lightgray;
+}
+
+.smoking {
+    color: black;
+}
+
+body p {
+    margin-bottom: 0;
+}
+
+.place {
+    display: flex;
+    justify-content: space-between;
+    margin: 0px 10px;
+}
+
+.bar {
+    margin: 10px 0px;
+}
