@@ -1,0 +1,40 @@
+.EditMyPlaceToilet {
+    background-color: white;
+    max-width: 478px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+body p {
+    margin-bottom: 0;
+}
+
+.bar {
+    margin: 0px;
+}
+
+.EditMyPlaceToilet .form-group {
+    margin: 30px 20px;
+}
+
+.EditMyPlaceToilet .form-group label {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.EditMyPlaceToilet .form-group input,
+.EditMyPlaceToilet .form-group textarea {
+    height: 40px;
+    width: 300px;
+    border-radius: 5px;
+    border: 1px solid gray;
+    margin-bottom: 0px;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.EditMyPlaceToilet .form-group textarea {
+    height: auto;
+    min-height: 100px; /* 텍스트 영역의 최소 높이 조정 */
+}
