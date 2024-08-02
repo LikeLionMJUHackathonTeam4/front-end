@@ -1,15 +1,12 @@
 import React, { useState, forwardRef, useImperativeHandle } from 'react';
 import AddressSearch from '../components/AddressSearch';
-import '../styles/InputToilet.css';
+import '../styles/InputSmoking.css';
 
-const InputToilet = forwardRef(({ onRegister }, ref) => {
+const InputSmoking = forwardRef(({ onRegister }, ref) => {
     const [values, setValues] = useState({
         name: '',
         location: '',
         detailedLocation: '',
-        password: '',
-        opentime: '',
-        toiletpaper: '',
         memo: '',
     });
 
@@ -39,19 +36,16 @@ const InputToilet = forwardRef(({ onRegister }, ref) => {
                 name: '',
                 location: '',
                 detailedLocation: '',
-                password: '',
-                opentime: '',
-                toiletpaper: '',
                 memo: '',
             });
         }
     }));
 
     return (
-        <div className="InputToilet">
-            <form className="inputFormToilet">
+        <div className="InputSmoking">
+            <form className="inputFormSmoking">
                 <div className="inputName">
-                    <p>화장실명</p>
+                    <p>흡연구역명</p>
                     <p className="necessary">(필수)</p>
                 </div>
                 <input
@@ -61,8 +55,9 @@ const InputToilet = forwardRef(({ onRegister }, ref) => {
                     name="name"
                     value={values.name}
                     onChange={handleChange}
-                    placeholder="화장실의 이름을 입력해주세요"
+                    placeholder="흡연구역의 이름을 입력해주세요"
                 />
+
                 <div className="inputName">
                     <p>위치</p>
                     <p className="necessary">(필수)</p>
@@ -76,10 +71,6 @@ const InputToilet = forwardRef(({ onRegister }, ref) => {
                     value={values.location}
                     onChange={handleChange}
                 />
-                <div className="inputName">
-                    <p>상세 위치</p>
-                    <p className="necessary">(필수)</p>
-                </div>
                 <input
                     className="detailedLocation"
                     type="text"
@@ -87,39 +78,6 @@ const InputToilet = forwardRef(({ onRegister }, ref) => {
                     value={values.detailedLocation}
                     onChange={handleChange}
                     placeholder="상세 주소를 입력하세요. 예) 동, 층"
-                />
-                <div className="inputName">
-                    <p>비밀번호</p>
-                </div>
-                <input
-                    className="password"
-                    type="text"
-                    name="password"
-                    value={values.password}
-                    onChange={handleChange}
-                    placeholder="비밀번호를 입력해주세요"
-                />
-                <div className="inputName">
-                    <p>개방시간</p>
-                </div>
-                <input
-                    className="opentime"
-                    type="text"
-                    name="opentime"
-                    value={values.opentime}
-                    onChange={handleChange}
-                    placeholder="개방시간을 입력해주세요"
-                />
-                <div className="inputName">
-                    <p>화장지 유무</p>
-                </div>
-                <input
-                    className="toiletpaper"
-                    type="text"
-                    name="toiletpaper"
-                    value={values.toiletpaper}
-                    onChange={handleChange}
-                    placeholder="예) 내부 구비, 이용 상가에서 제공 등"
                 />
                 <div className="inputName">
                     <p>메모</p>
@@ -137,4 +95,4 @@ const InputToilet = forwardRef(({ onRegister }, ref) => {
     );
 });
 
-export default InputToilet;
+export default InputSmoking;

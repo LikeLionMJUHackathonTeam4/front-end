@@ -5,3 +5,12 @@ body {
     max-width: 478px;
     height: 100vh;
 }
+
+#root {
+    background-color: rgb(182, 182, 182);
+    max-width: 478px;
+    margin-left: auto;
+    margin-right: auto;
+    height: 100vh;
+    font-family: Inter;
+}
