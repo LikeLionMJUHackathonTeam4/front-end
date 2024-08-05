@@ -1,8 +1,34 @@
+import React, { useState } from 'react';
 import '../styles/MyPlaceSmoking.css';
 import CustomButton from '../components/CustomButton'
 import Header from '../components/Header';
+import Modal from '../components/Modal';
+import { useNavigate } from 'react-router-dom';
 
-const MyPlaceSmoking = () => {
+const MyPlaceSmoking = ({ smokings, onDeleteSmoking }) => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedSmokingId, setSelectedSmokingId] = useState(null);
+    const navigate = useNavigate();
+
+    const handleEditClick = (id) => {
+        navigate(`/editmyplacesmoking/${id}`);
+    };
+
+    const handleDeleteClick = (id) => {
+        setSelectedSmokingId(id);
+        setIsModalOpen(true);
+    };
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
+        setSelectedSmokingId(null);
+    };
+
+    const handleConfirmDelete = () => {
+        onDeleteSmoking(selectedSmokingId);
+        handleCloseModal();
+    };
+
     return (
         <div className="MyPlaceSmoking">
             <Header
@@ -14,8 +40,19 @@ const MyPlaceSmoking = () => {
             />
 
             <div className='choosePlace'>
-                <p className='Mytoilet'>화장실</p>
-                <p>흡연구역</p>
+
+                <p
+                    className='mytoilet'
+                    onClick={() => navigate('/myplace')}
+                >
+                    화장실
+                </p>
+                <p
+                    className='mySmoking'
+                    onClick={() => navigate('/myplacesmoking')}
+                >
+                    흡연구역
+                </p>
             </div>
             <div className='nav-bar'>
             <svg width="478" height="3" viewBox="0 0 478 3" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -31,26 +68,32 @@ const MyPlaceSmoking = () => {
 
             <hr className='bar'/>
 
-            <div className='place'>
-                <p>여기에 저장된 데이터 불러오면 됨</p>
-                <div className='buttons'>
-                    <CustomButton text={'수정'}/>
-                    <CustomButton text={'삭제'}/>
-                </div>
-            </div>
-            
-            <hr className='bar'/>
-
-            <div className='place'>
-                <p>여기에 저장된 데이터 불러오면 됨</p>
-                <div className='buttons'>
-                    <CustomButton text={'수정'}/>
-                    <CustomButton text={'삭제'}/>
-                </div>
-            </div>
-            
-            <hr className='bar'/>
-
+            {smokings.length === 0 ? (
+                <p>저장된 흡연구역이 없습니다.</p>
+            ) : (
+                smokings.map(smoking => (
+                    <div key={smoking.id} className='place'>
+                        <p>{smoking.name}</p>
+                        <p>{smoking.location}</p>
+                        <p>{smoking.detailedLocation}</p>
+                        <div className='buttons'>
+                            <CustomButton 
+                                text='수정' 
+                                onClick={() => handleEditClick(smoking.id)} 
+                            />
+                            <CustomButton 
+                                text='삭제' 
+                                onClick={() => handleDeleteClick(smoking.id)} 
+                            />
+                        </div>
+                    </div>
+                ))
+            )}
+            <Modal 
+                isOpen={isModalOpen} 
+                onClose={handleCloseModal} 
+                onConfirm={handleConfirmDelete} 
+            />
         </div>
     )
 }

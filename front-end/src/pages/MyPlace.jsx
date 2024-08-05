@@ -1,8 +1,33 @@
+import React, { useState } from 'react';
 import '../styles/MyPlace.css';
 import CustomButton from '../components/CustomButton'
 import Header from '../components/Header';
+import Modal from '../components/Modal';
 import { useNavigate } from 'react-router-dom';
 
+const MyPlace = ({ toilets, onDeleteToilet }) => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedToiletId, setSelectedToiletId] = useState(null);
+    const navigate = useNavigate();
+
+    const handleEditClick = (id) => {
+        navigate(`/editmyplacetoilet/${id}`);
+    };
+
+    const handleDeleteClick = (id) => {
+        setSelectedToiletId(id);
+        setIsModalOpen(true);
+    };
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
+        setSelectedToiletId(null);
+    };
+
+    const handleConfirmDelete = () => {
+        onDeleteToilet(selectedToiletId);
+        handleCloseModal();
+    };
 
 const MyPlace = () => {
     const nav = useNavigate()
@@ -34,26 +59,29 @@ const MyPlace = () => {
 
             <hr className='bar'/>
 
-            <div className='place'>
-                <p>여기에 저장된 데이터 불러오면 됨</p>
-                <div className='buttons'>
-                    <CustomButton text={'수정'}/>
-                    <CustomButton text={'삭제'}/>
-                </div>
-            </div>
+            {toilets.length === 0 ? (
+                <p>저장된 화장실이 없습니다.</p>
+            ) : (
+                toilets.map(toilet => (
+                    <div key={toilet.id} className='place'>
+                        <p>{toilet.name}</p>
+                        <p>{toilet.location}</p>
+                        <p>{toilet.detailedLocation}</p>
+                        <p>{toilet.description}</p>
+                        <div className='buttons'>
+                            <CustomButton text='수정' onClick={() => handleEditClick(toilet.id)} />
+                            <CustomButton text='삭제' onClick={() => handleDeleteClick(toilet.id)} />
+                        </div>
+                        <hr className='bar'/>
+                    </div>
+                ))
+            )}
             
-            <hr className='bar'/>
-
-            <div className='place'>
-                <p>여기에 저장된 데이터 불러오면 됨</p>
-                <div className='buttons'>
-                    <CustomButton text={'수정'}/>
-                    <CustomButton text={'삭제'}/>
-                </div>
-            </div>
-            
-            <hr className='bar'/>
-
+            <Modal 
+                isOpen={isModalOpen} 
+                onClose={handleCloseModal} 
+                onConfirm={handleConfirmDelete} 
+            />
         </div>
     )
 }
