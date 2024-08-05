@@ -1,14 +1,32 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../styles/MyPlaceSmoking.css';
 import CustomButton from '../components/CustomButton';
 import Header from '../components/Header';
+import Modal from '../components/Modal';
 import { useNavigate } from 'react-router-dom';
 
-const MyPlaceSmoking = ({ smokings = [] }) => {
+const MyPlaceSmoking = ({ smokings, onDeleteSmoking }) => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedSmokingId, setSelectedSmokingId] = useState(null);
     const navigate = useNavigate();
 
     const handleEditClick = (id) => {
         navigate(`/editmyplacesmoking/${id}`);
+    };
+
+    const handleDeleteClick = (id) => {
+        setSelectedSmokingId(id);
+        setIsModalOpen(true);
+    };
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
+        setSelectedSmokingId(null);
+    };
+
+    const handleConfirmDelete = () => {
+        onDeleteSmoking(selectedSmokingId);
+        handleCloseModal();
     };
 
     return (
@@ -40,13 +58,13 @@ const MyPlaceSmoking = ({ smokings = [] }) => {
             <div className='choosePlace'>
                 <p
                     className='mytoilet'
-                    onClick={() => navigate('/myplace')} // 화장실 페이지로 이동
+                    onClick={() => navigate('/myplace')}
                 >
                     화장실
                 </p>
                 <p
                     className='mySmoking'
-                    onClick={() => navigate('/myplacesmoking')} // 현재 페이지
+                    onClick={() => navigate('/myplacesmoking')}
                 >
                     흡연구역
                 </p>
@@ -79,12 +97,18 @@ const MyPlaceSmoking = ({ smokings = [] }) => {
                             />
                             <CustomButton 
                                 text='삭제' 
-                                onClick={() => { /* Add delete functionality */ }} 
+                                onClick={() => handleDeleteClick(smoking.id)} 
                             />
                         </div>
                     </div>
                 ))
             )}
+
+            <Modal 
+                isOpen={isModalOpen} 
+                onClose={handleCloseModal} 
+                onConfirm={handleConfirmDelete} 
+            />
         </div>
     );
 };
