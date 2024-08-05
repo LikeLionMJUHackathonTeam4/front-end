@@ -7,12 +7,9 @@
 .choosePlace {
     padding: 0;
     display: flex;
-    justify-content: space-around;
+    
+    justify-content: space-around;;
     max-width: 478px;
-}
-
-.Mytoilet {
-    color: black;
 }
 
 .Mysmoking {
@@ -27,11 +24,6 @@ body p {
     display: flex;
     justify-content: space-between;
     margin: 0px 10px;
-}
-
-.dataText {
-    display: flex;
-    font-size: 11px;
 }
 
 .bar {

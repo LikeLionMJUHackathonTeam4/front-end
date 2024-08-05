@@ -1,0 +1,248 @@
+.TopNav .backIcon img {
+    width: 12.165px;
+    height: 23.982px;
+    flex-shrink: 0;
+    margin: 79px 0px 0px 21px;
+}
+
+.NavBar {
+    padding: 0;
+    display: flex;
+    justify-content: space-around;;
+    max-width: 478px;
+}
+
+.Description {
+    text-decoration: none; /* 링크 밑줄 제거 */
+    color: #000;
+    text-align: center;
+    font-family: Inter;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.Review {
+    text-decoration: none; /* 링크 밑줄 제거 */
+    color: #939395;
+    font-family: Inter;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.DescriptionTitle {
+    display: flex;
+    align-items: center;
+    margin: 28px 0px 0px 29px;
+    position: relative;
+}
+
+.LocationName-desc {
+    color: var(--Black, #000);
+    font-family: Inter;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.type-desc {
+    color: var(--Text-Disabled, var(--Grey, #919295));
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    margin-left: 5px;
+}
+
+.DescBookmark {
+    border: none;
+    background-color: transparent;
+    position: absolute;
+    right: 30px;
+}
+
+.Score-container-desc {
+    margin: 10px 0px 0px 29px;
+}
+
+.time-desc {
+    color: var(--Black, #000);
+    font-family: Inter;
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    margin: 7px 0px 0px 29px;
+}
+
+.Address-container-desc button {
+    border: none;
+    background-color: transparent;
+}
+
+.address-desc {
+    color: var(--Black, #000);
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    margin: 12px 0px 0px 29px;
+}
+
+.Road-address-desc {
+    color: var(--Black, #000);
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    margin: 12px 0px 28px 29px;
+}
+
+.Middle {
+    border-top: 5px solid #DCDEE2;
+    padding-top: 37px;
+}
+
+.circle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.circle img {
+    padding: 0px 7px;
+}
+
+.mans {
+    margin: 28px 29px 10px 0px;
+}
+
+.mans div{
+    display: flex;
+    align-items: center;
+    margin-bottom: 1px;
+    color: #525255;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.ManType {
+    color: var(--Black, #000);
+    font-family: Inter;
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.pee {
+    margin-left: 90px;
+}
+
+.disabled-poop{
+    margin-left: 90px;
+}
+
+.disabled-pee{
+    margin-left: 90px;
+}
+
+.child-poop{
+    margin-left: 90px;
+}
+
+.child-pee{
+    margin-left: 90px;
+}
+
+.long-line {
+    width: 257px;
+    height: 1.5px;
+    background: #DCDEE2;
+    margin: 0px 14px 0px 13px;
+}
+
+.short-line {
+    width: 202px;
+    height: 1.5px;
+    background: #DCDEE2;
+    margin: 0px 14px 0px 13px;
+}
+
+.women {
+    margin: 0px 29px 32px 0px;
+}
+
+.women div {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1px;
+    color: #525255;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.WomanType {
+    color: var(--Black, #000);
+    font-family: Inter;
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.MoreDesc {
+    border-top: 5px solid #DCDEE2;
+}
+
+.MoreDesc-title {
+    color: var(--Black, #000);
+    font-family: Inter;
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    margin: 27px 0px 12px 28px;
+}
+
+.MoreDesc div {
+    display: flex;
+    align-items: center;
+    margin: 0px 0px 8px 28px;
+}
+
+.MoreDesc-left {
+    color: var(--Black, #000);
+    font-family: Inter;
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    margin-right: 10px;
+}
+
+.MoreDesc-right {
+    color: var(--Text-Black, var(--Black, #000));
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}

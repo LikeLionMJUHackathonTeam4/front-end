@@ -1,3 +1,4 @@
+import './App.css'
 import React, { useState } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import Home from './pages/Home';
@@ -20,9 +21,6 @@ import initialSmokings from './util/initialSmokings';
 import MyPage from './pages/MyPage';
 
 function App() {
-    const [toilets, setToilets] = useState(initialToilets);
-    const [smokings, setSmokings] = useState(initialSmokings);
-    const navigate = useNavigate();
 
     const addToilet = (newToilet) => {
         setToilets(prevToilets => [...prevToilets, newToilet]);
