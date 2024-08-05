@@ -1,3 +1,47 @@
+.InfoSearch-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 79px; /* 부모 요소가 화면 전체 높이를 차지하도록 설정 */
+    padding-top: 79px; /* 상단 여백 추가 */
+}
+
+.InfoSearch{
+    width: 454px;
+    height: 55px;
+    border-radius: 6px;
+    border: 1px solid var(--Gray, #D9D9D9);
+    background: var(--White, #FFF);
+    display: flex;
+    flex-shrink: 0;
+}
+
+.backIcon-Info {
+    display: flex;
+    width: 24px;
+    height: 24px;
+    padding: 0.012px 5.834px 0.006px 6.001px;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    margin: 15px 0px 16px 15px;
+}
+
+.Info-Search {
+    color: #A2A2A2;
+    font-family: Inter;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    flex-shrink: 0;
+    text-decoration: none; /* 링크 밑줄 제거 */
+    margin: 16px 273px 15px 15px;
+    width: 150px;
+    height: 24px;
+}
+
 .InfoTab {
     width: 478px;
     height: 290px;
@@ -10,16 +54,74 @@
 
 .InfoTitle {
     display: flex;
+    align-items: center;
+    margin: 71px 0px 0px 28px;
 }
 
-.address button {
+.LocationName {
+    color: var(--Black, #000);
+    font-family: Inter;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.type {
+    color: var(--Text-Disabled, var(--Grey, #919295));
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    margin-left: 6px;
+}
+
+.InfoBookmark {
+    border: none;
+    background-color: transparent;
+    position: absolute;
+    right: 30px;
+    bottom: 194px;
+}
+
+.Score-container {
+    margin: 10px 0px 0px 29px;
+}
+
+.time {
+    color: var(--Black, #000);
+    font-family: Inter;
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    margin: 7px 0px 0px 29px;
+}
+
+.Address-container button {
     border: none;
     background-color: transparent;
 }
 
-.InfoButton button {
-    border: none;
-    background-color: transparent;
+.address {
+    color: var(--Black, #000);
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    margin: 12px 0px 0px 29px;
+}
+
+.Road-address {
+    color: var(--Black, #000);
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    margin: 12px 0px 0px 29px;
 }
 
 .MoreInfo {
@@ -30,4 +132,6 @@
     font-style: normal;
     font-weight: 500;
     line-height: normal;
+    text-decoration: none; /* 링크 밑줄 제거 */
+    margin: 248px 0px 0px 390px;
 }

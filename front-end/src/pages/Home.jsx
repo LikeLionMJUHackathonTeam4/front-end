@@ -1,16 +1,20 @@
-import Map from '../components/Map'
+import '../styles/Home.css'
+import HomeMap from '../components/HomeMap'
 import MapSearch from '../components/MapSearch'
 import TopButton from '../components/TopButton'
 import Navbar from '../components/Navbar'
+import { useLocation } from 'react-router-dom'
 
 const Home = () => {
+    const location = useLocation();
+
     return (
-        <>
-            {/* <Map /> */}
+        <div className='Home'>
+            {/* <HomeMap /> */}
             <MapSearch />
             <TopButton />
-            <Navbar />
-        </>
+            <Navbar currentPath={location.pathname}/>
+        </div>
     )
 }
 

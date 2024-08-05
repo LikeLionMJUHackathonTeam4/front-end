@@ -1,7 +1,7 @@
 .NewMyPlaceToilet {
     background-color: white;
     max-width: 478px;
-    min-height: 100vh;
+    height: 100vh;
 }
 
 body p {

@@ -1,34 +1,42 @@
-.Navbar {
-    width: 478px;
-    height: 117px;
-    flex-shrink: 0;
-    background: var(--White, #FFF);
-    position : fixed;
-    bottom : 0;
-    display: flex;
-}
-
-.bookmarkNav {
-    border: none;
-    background-color: #FFF;
-    margin: auto;
-}
-
-.home {
-    border: none;
-    background-color: #FFF;
-    margin: auto;
-}
-
-.mypage {
-    border: none;
-    background-color: #FFF;
-    margin: auto;
+.Bottom {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    z-index: 10;
 }
 
 .gps {
     border: none;
     background-color: transparent;
+    position : absolute;
+    top: -80px;
+    left: 400px;
+    z-index: 10;
+}
+
+.Navbar {
+    width: 478px;
+    height: 117px;
+    flex-shrink: 0;
+    background: var(--White, #FFF);
     display: flex;
-    justify-content: right;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.bookmarkNav, .selectHome, .mypage {
+    border: none;
+    background-color: #FFF;
+    text-decoration: none; /* 링크 밑줄 제거 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--Black, #000);
+    flex-shrink: 0;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
 }
