@@ -1,0 +1,24 @@
+.MyPage {
+    background-color: white;
+    max-width: 478px;
+    height: 100vh;
+}
+
+.myimg {
+    padding: 5px;
+    border: 2px solid lightgray;
+    border-radius: 10px;
+}
+
+body p {
+    margin-bottom: 0;
+}
+
+.dataText {
+    display: flex;
+    font-size: 11px;
+}
+
+.bar {
+    margin: 10px 0px;
+}

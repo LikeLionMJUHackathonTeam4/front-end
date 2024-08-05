@@ -1,16 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../styles/MyPlace.css';
 import CustomButton from '../components/CustomButton';
 import Header from '../components/Header';
+import Modal from '../components/Modal';
 import { useNavigate } from 'react-router-dom';
 
-const MyPlace = ({ toilets }) => {
+const MyPlace = ({ toilets, onDeleteToilet }) => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedToiletId, setSelectedToiletId] = useState(null);
     const navigate = useNavigate();
 
     const handleEditClick = (id) => {
-        console.log('Navigating to:', `/editmyplacetoilet/${id}`);  // 확인용 로그
         navigate(`/editmyplacetoilet/${id}`);
-    };    
+    };
+
+    const handleDeleteClick = (id) => {
+        setSelectedToiletId(id);
+        setIsModalOpen(true);
+    };
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
+        setSelectedToiletId(null);
+    };
+
+    const handleConfirmDelete = () => {
+        onDeleteToilet(selectedToiletId);
+        handleCloseModal();
+    };
 
     return (
         <div className="MyPlace">
@@ -66,12 +83,18 @@ const MyPlace = ({ toilets }) => {
                         <p>{toilet.description}</p>
                         <div className='buttons'>
                             <CustomButton text='수정' onClick={() => handleEditClick(toilet.id)} />
-                            <CustomButton text='삭제' onClick={() => { /* Add delete functionality */ }} />
+                            <CustomButton text='삭제' onClick={() => handleDeleteClick(toilet.id)} />
                         </div>
                         <hr className='bar'/>
                     </div>
                 ))
             )}
+            
+            <Modal 
+                isOpen={isModalOpen} 
+                onClose={handleCloseModal} 
+                onConfirm={handleConfirmDelete} 
+            />
         </div>
     );
 };
