@@ -2,10 +2,12 @@ import Header from "../components/Header";
 import CustomButton from "../components/CustomButton";
 import "../image/제작자 이미지.jpg"
 import "../styles/MyPage.css"
+import { useNavigate } from 'react-router-dom'
 
 const MyPage = () => {
     const name="김멋사"
     const email="likelion@kakao.com"
+    const navigate = useNavigate();
 
     return (
         <div className="MyPage">

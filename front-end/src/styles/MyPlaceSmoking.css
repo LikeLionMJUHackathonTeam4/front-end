@@ -12,10 +12,13 @@
     max-width: 478px;
 }
 
-.Mytoilet {
+.mytoilet {
     color: lightgray;
 }
 
+.mySmoking {
+    color: black;
+}
 body p {
     margin-bottom: 0;
 }

@@ -1,4 +1,3 @@
-import './App.css'
 import React, { useState } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import Home from './pages/Home';
@@ -21,6 +20,10 @@ import initialSmokings from './util/initialSmokings';
 import MyPage from './pages/MyPage';
 
 function App() {
+    const [toilets, setToilets] = useState(initialToilets);
+    const [smokings, setSmokings] = useState(initialSmokings);
+    const [reviews, setReviews] = useState([]);
+    const navigate = useNavigate();
 
     const addToilet = (newToilet) => {
         setToilets(prevToilets => [...prevToilets, newToilet]);
@@ -56,15 +59,19 @@ function App() {
         setSmokings(prevSmokings => prevSmokings.filter(smoking => smoking.id !== id));
     };
 
+    const addReview = (newReview) => {
+        setReviews(prevReviews => [...prevReviews, newReview]);
+    };
+
     return (
         <>
             <Routes>
-                <Route path='/' element={<Home />} />
+                <Route path='/' element={<Home toilets={toilets} />} />
                 <Route path='/search' element={<Search />} />
                 <Route path='/info' element={<Info />} />
                 <Route path='/description' element={<Description />} />
-                <Route path='/review' element={<Review />} />
-                <Route path='/newreview' element={<NewReview />} />
+                <Route path='/review' element={<Review reviews={reviews} />} />
+                <Route path='/newreview' element={<NewReview addReview={addReview} />} />
                 <Route path='/editreview' element={<EditReview />} />
                 <Route path='/myplace' element={<MyPlace toilets={toilets} onDeleteToilet={deleteToilet} />} />
                 <Route path='/myplacesmoking' element={<MyPlaceSmoking smokings={smokings} onDeleteSmoking={deleteSmoking} />} />
