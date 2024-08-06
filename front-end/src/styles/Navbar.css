@@ -8,7 +8,7 @@
 .gps {
     border: none;
     background-color: transparent;
-    position : absolute;
+    position: absolute;
     top: -80px;
     left: 400px;
     z-index: 10;
@@ -16,12 +16,13 @@
 
 .Navbar {
     width: 478px;
-    height: 117px;
+    height: 90px; /* 높이 약간 증가 */
     flex-shrink: 0;
     background: var(--White, #FFF);
     display: flex;
     align-items: center;
     justify-content: space-around;
+    padding: 10px 0; /* 위아래 패딩 추가 */
 }
 
 .bookmarkNav, .selectHome, .mypage {
@@ -35,8 +36,18 @@
     text-align: center;
     color: var(--Black, #000);
     flex-shrink: 0;
-    font-size: 15px;
+    font-size: 15px; /* 폰트 크기 약간 증가 */
     font-style: normal;
     font-weight: 600;
     line-height: normal;
+}
+
+.bookmarkNav img, .selectHome img, .mypage img {
+    width: 28px; /* 아이콘 크기 약간 증가 */
+    height: 28px; /* 아이콘 크기 약간 증가 */
+    margin-bottom: 5px; /* 아이콘과 텍스트 간의 간격 조정 */
+}
+
+.bookmarkNav, .selectHome, .mypage {
+    width: 80px; /* 너비 유지 */
 }

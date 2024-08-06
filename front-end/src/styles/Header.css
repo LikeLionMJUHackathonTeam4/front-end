@@ -4,4 +4,12 @@
     align-items: center;
     justify-content: space-between;
     max-width: 478px;
+    font-weight: 600;
+    position: relative;
+}
+
+.header_center {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
 }
