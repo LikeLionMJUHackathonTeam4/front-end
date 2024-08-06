@@ -1,31 +1,87 @@
-.MyPlaceSmoking {
+.MyPlace, .MyPlaceSmoking {
     background-color: white;
     max-width: 478px;
-    height: 100vh;
+    min-height: 100vh;
+    margin: 0 auto; /* 중앙 정렬 */
+    box-sizing: border-box; /* 패딩과 보더가 전체 너비와 높이에 포함되도록 설정 */
 }
 
 .choosePlace {
-    padding: 0;
     display: flex;
-    
-    justify-content: space-around;;
-    max-width: 478px;
+    justify-content: space-around;
+    padding: 0px;
 }
 
-.Mytoilet {
-    color: lightgray;
+.choosePlace-item {
+    cursor: pointer; /* 클릭 가능한 요소로 표시 */
+    font-size: 14px; /* 폰트 사이즈 통일 */
 }
 
-body p {
-    margin-bottom: 0;
+.myToilet {
+    color: black; /* 색상 통일 */
+    cursor: pointer;
+
+}
+
+.mySmoking {
+    color: black; /* 색상 통일 */
+    cursor: pointer;
+
 }
 
 .place {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column; /* 세로로 정렬 */
+    margin: 0px 10px;
+    padding: 10px;
+    border: 1px solid #E9E9EB; /* 테두리 추가 */
+    border-radius: 5px; /* 모서리 둥글게 */
+    margin-bottom: 10px; /* 하단 마진 추가 */
+    background-color: #F9F9F9; /* 배경 색상 추가 */
+}
+
+.place p {
+    margin: 4px 0px; /* 문단 간격 조정 */
+    font-size: 14px; /* 폰트 사이즈 조정 */
+}
+
+.buttons {
+    display: flex;
+    justify-content: flex-end; /* 버튼을 오른쪽 정렬 */
+    gap: 10px; /* 버튼 간의 간격 추가 */
+    margin-top: 10px; /* 상단 여백 추가 */
+}
+
+.sort-bar select {
+    padding: 5px; /* 선택 박스 패딩 추가 */
+    border-radius: 5px; /* 선택 박스 모서리 둥글게 */
+    border: 1px solid #E9E9EB; /* 선택 박스 테두리 */
     margin: 0px 10px;
 }
 
 .bar {
-    margin: 10px 0px;
+    margin: 20px 0; /* 상하 여백 조정 */
+    border-top: 1px solid #E9E9EB; /* 상단 구분선 */
+}
+
+.nav-bar {
+    width: 100%; /* 화면의 전체 너비를 사용하도록 설정 */
+    overflow: hidden; /* 내용이 벗어나는 경우 숨기기 */
+    padding: 20px 0px; /* 좌우 패딩 추가 */
+    box-sizing: border-box; /* 패딩이 전체 너비에 포함되도록 설정 */
+}
+
+.nav-bar svg {
+    width: 100%; /* SVG 너비를 부모 요소에 맞게 설정 */
+    max-width: 478px; /* 최대 너비를 제한 */
+    display: block; /* 블록으로 표시하여 자동으로 가로 폭을 맞추도록 설정 */
+    margin: 0 auto; /* 가운데 정렬 */
+}
+
+.nav-bar svg line {
+    stroke-width: 2; /* 선 두께 조정 */
+}
+
+.nav-bar svg path {
+    stroke-width: 2; /* 경로의 두께 조정 */
 }

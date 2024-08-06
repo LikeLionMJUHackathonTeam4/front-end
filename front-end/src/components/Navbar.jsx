@@ -1,35 +1,36 @@
-import '../styles/Navbar.css'
-import bookmarkNavIcon from '../image/bookmarkNav.svg'
-import selectHomeIcon from '../image/selectHome.svg'
-import homeIcon from '../image/home.svg'
-import mypageIcon from '../image/mypage.svg'
-import gpsIcon from '../image/gps.svg'
-import { Link } from 'react-router-dom';
+import React from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import '../styles/Navbar.css';
+import bookmarkNavIcon from '../image/bookmarkNav.svg';
+import selectHomeIcon from '../image/selectHome.svg';
+import homeIcon from '../image/home.svg';
+import mypageIcon from '../image/mypage.svg';
+import gpsIcon from '../image/gps.svg';
 
-const Navbar = ({ currentPath }) => {
-    const isHome = currentPath === '/';
-    const isMyPage = currentPath === '/mypage';
+const Navbar = () => {
+    const location = useLocation();
+    const currentPath = location.pathname;
 
     return (
         <div className='Bottom'>
-            {!isMyPage && (
+            {currentPath !== '/mypage' && (
                 <button className='gps'>
-                    <img src={gpsIcon} />
+                    <img src={gpsIcon} alt="GPS Icon" />
                 </button>
             )}
             <div className="Navbar">
                 <Link to='/myplace' className='bookmarkNav'>
-                    <img src={bookmarkNavIcon} />내장소
+                    <img src={bookmarkNavIcon} alt="Bookmark Icon" />내장소
                 </Link>
                 <Link to='/' className='selectHome'>
-                    <img src={isHome ? selectHomeIcon : homeIcon} />홈
+                    <img src={currentPath === '/' ? selectHomeIcon : homeIcon} alt="Home Icon" />홈
                 </Link>
                 <Link to='/mypage' className='mypage'>
-                    <img src={mypageIcon} />마이페이지
+                    <img src={mypageIcon} alt="MyPageIcon" />마이페이지
                 </Link>
             </div>
         </div>
-    )
-}
+    );
+};
 
 export default Navbar;

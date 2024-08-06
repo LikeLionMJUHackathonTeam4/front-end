@@ -1,0 +1,60 @@
+.UserProfile {
+    display: flex;
+}
+
+.myimg {
+    margin: 10px 20px 10px 40px;
+    padding: 5px;
+    border: 2px solid lightgray;
+    border-radius: 10px;
+}
+
+.userText {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+}
+
+.myName {
+    margin: 5px 0px;
+    color: #2CB3FF;
+    font-weight: 800;
+    font-size: 17px;
+}
+
+/* UserProfile.css */
+
+/* 프로필 영역 스타일 */
+.UserProfile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+/* 프로필 사진 스타일 */
+.UserProfile img {
+    border-radius: 50%;
+    width: 100px; /* 적당한 크기로 조정 */
+    height: 100px; /* 적당한 크기로 조정 */
+    object-fit: cover;
+    margin-bottom: 10px; /* 사진과 텍스트 간의 간격 조정 */
+}
+
+/* 프로필 텍스트 스타일 */
+.UserProfile h2 {
+    font-size: 20px; /* 적당한 크기로 조정 */
+    font-weight: bold;
+    color: #333;
+    margin: 5px 0;
+}
+
+.UserProfile p {
+    font-size: 16px; /* 적당한 크기로 조정 */
+    color: #666;
+}

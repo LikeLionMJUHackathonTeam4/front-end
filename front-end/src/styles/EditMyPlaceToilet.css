@@ -1,40 +1,61 @@
 .EditMyPlaceToilet {
     background-color: white;
     max-width: 478px;
-    height: 100vh;
+    min-height: 100vh;
+    margin: 0 auto; /* 중앙 정렬 */
     display: flex;
     flex-direction: column;
+    box-sizing: border-box; /* 패딩과 보더가 전체 너비와 높이에 포함되도록 설정 */
 }
 
 body p {
-    margin-bottom: 0;
+    margin: 0; /* 문단 마진 제거 */
 }
 
 .bar {
-    margin: 0px;
+    margin: 20px 0; /* 상하 여백 조정 */
+    border-top: 1px solid #E9E9EB; /* 상단 구분선 */
 }
 
 .EditMyPlaceToilet .form-group {
-    margin: 30px 20px;
+    margin: 10px 20px; /* 여백 조정 */
+    display: flex;
+    flex-direction: column; /* 세로로 정렬 */
 }
 
 .EditMyPlaceToilet .form-group label {
     font-weight: bold;
-    margin-right: 10px;
+    margin-bottom: 4px; /* 라벨과 입력 필드 간의 간격 추가 */
 }
 
 .EditMyPlaceToilet .form-group input,
 .EditMyPlaceToilet .form-group textarea {
     height: 40px;
-    width: 300px;
+    width: 100%; /* 입력 필드와 텍스트 영역의 너비를 부모에 맞게 설정 */
     border-radius: 5px;
     border: 1px solid gray;
-    margin-bottom: 0px;
+    margin-bottom: 4px; /* 입력 필드와 텍스트 영역 간의 간격 조정 */
     padding: 10px;
     box-sizing: border-box;
 }
 
 .EditMyPlaceToilet .form-group textarea {
-    height: auto;
     min-height: 100px; /* 텍스트 영역의 최소 높이 조정 */
+    resize: vertical; /* 수직 방향으로 크기 조절 가능 */
+}
+
+.forms {
+    flex: 1; /* 폼이 가능한 모든 공간을 차지하도록 설정 */
+    display: flex;
+    flex-direction: column; /* 세로로 정렬 */
+    justify-content: center; /* 중앙 정렬 */
+}
+
+.EditMyPlaceToilet .form-group input,
+.EditMyPlaceToilet .form-group textarea {
+    font-size: 14px; /* 폰트 사이즈 조정 */
+}
+
+.EditMyPlaceToilet .form-group label {
+    font-size: 14px; /* 라벨 폰트 사이즈 조정 */
 }

@@ -1,0 +1,12 @@
+.kakao-login-button {
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    background: none;
+  }
+  
+  .kakao-login-image {
+    width: 100%; /* 원하는 이미지 크기로 조정 가능 */
+    height: auto;
+  }
+  
