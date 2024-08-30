@@ -7,9 +7,14 @@
 }
 
 .choosePlace {
+    padding: 0;
     display: flex;
     justify-content: space-around;
-    padding: 0px;
+    max-width: 478px;
+}
+
+.Mytoilet {
+    color: black;
 }
 
 .choosePlace-item {
@@ -36,6 +41,11 @@
     border-radius: 5px; /* 모서리 둥글게 */
     margin-bottom: 10px; /* 하단 마진 추가 */
     background-color: #F9F9F9; /* 배경 색상 추가 */
+}
+
+.dataText {
+    display: flex;
+    font-size: 11px;
 }
 
 .place p {

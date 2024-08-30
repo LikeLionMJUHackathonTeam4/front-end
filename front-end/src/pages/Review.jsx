@@ -2,8 +2,14 @@ import '../styles/Review.css'
 import { Link } from 'react-router-dom'
 import backIcon from '../image/back.svg'
 import profileIcon from '../image/profile.svg'
+import { FaStar } from 'react-icons/fa'
 
-const Review = () => {
+const Review = ({ reviews }) => {
+    // 총 별점과 리뷰 수를 계산
+    const totalRating = reviews.reduce((acc, review) => acc + review.rating, 0);
+    const averageRating = reviews.length ? (totalRating / reviews.length).toFixed(1) : 0;
+
+
     return (
         <>
             <div className='Review-Back'>
@@ -33,23 +39,44 @@ const Review = () => {
                 <Link to='/newreview' className='goNewReview'>후기쓰기</Link>
             </div>
             <div className='review-score'>
-                <p>몇 점</p>
-                <div>대충 별이 들어갈 자리</div>
+                <p></p>
+                <div className='star-rating'>
+                    {[...Array(5)].map((_, index) => (
+                        index < averageRating ? 
+                        <FaStar key={index} color="#2CB3FF" /> : 
+                        <FaStar key={index} color="#E0E0E0" />
+                    ))}
+                </div>
+                <p>{averageRating} / 5</p>
             </div>
             <div className='ReviewList'>
-                <img src={profileIcon} />
-                <div className='content'>
-                    <p className='nickname'>닉넴</p>
-                    <div className='day'>
-                        <div>별별별</div>
-                        <p>| 날짜</p>
-                    </div>
-                    <p>~후기 내용~</p>
-                </div>
-                <div className='review-button'>
-                    <Link to='/editreview' className='goToEditReview'>수정</Link>
-                    <button>삭제</button>
-                </div>
+            {reviews.length === 0 ? (
+                    <p>작성된 리뷰가 없습니다.</p>
+                ) : (
+                    reviews.map((review, index) => (
+                        <div key={index} className='review-item'>
+                            <img src={profileIcon} />
+                            <div className='content'>
+                                <p className='nickname'>닉넴</p>
+                                <div className='day'>
+                                    <div className='star-rating'>
+                                        {[...Array(5)].map((_, starIndex) => (
+                                            starIndex < review.rating ? 
+                                            <FaStar key={starIndex} color="#2CB3FF" /> : 
+                                            <FaStar key={starIndex} color="#E0E0E0" />
+                                        ))}
+                                    </div>
+                                    <p>| 날짜</p>
+                                </div>
+                                <p>{review.text}</p>
+                            </div>
+                            <div className='review-button'>
+                                <Link to={`/editreview/${index}`} className='goToEditReview'>수정</Link>
+                                <button>삭제</button>
+                            </div>
+                        </div>
+                    ))
+                )}
             </div>
             <hr />
         </>
