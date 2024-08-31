@@ -1,6 +1,5 @@
 import { useRef, useState, useEffect, forwardRef, useImperativeHandle } from "react";
 
-
 const Map = forwardRef((props, ref) => {
   const mapContainer = useRef(null);
   const [location, setLocation] = useState({
@@ -29,34 +28,31 @@ const Map = forwardRef((props, ref) => {
   }));
 
   useEffect(() => {
-    if (mapContainer.current) {
-      let mapOption = {
-        center: new kakao.maps.LatLng(location.lat, location.lng),
+    if (mapContainer.current && window.kakao) {
+      const mapOption = {
+        center: new window.kakao.maps.LatLng(location.lat, location.lng), // 'kakao' 객체가 준비되었는지 확인
         level: 3,
       };
 
-      let map = new kakao.maps.Map(mapContainer.current, mapOption);
+      const map = new window.kakao.maps.Map(mapContainer.current, mapOption);
 
       function displayMarker(locPosition, message) {
-        let marker = new kakao.maps.Marker({
+        const marker = new window.kakao.maps.Marker({
           map: map,
           position: locPosition,
         });
 
-        let iwContent = message;
-        let iwRemoveable = true;
-
-        let infowindow = new kakao.maps.InfoWindow({
-          content: iwContent,
-          removable: iwRemoveable,
+        const infowindow = new window.kakao.maps.InfoWindow({
+          content: message,
+          removable: true,
         });
 
         infowindow.open(map, marker);
         map.setCenter(locPosition);
       }
 
-      let locPosition = new kakao.maps.LatLng(location.lat, location.lng);
-      let message = '<div style="padding:5px;">현 위치</div>';
+      const locPosition = new window.kakao.maps.LatLng(location.lat, location.lng);
+      const message = '<div style="padding:5px;">현 위치</div>';
       displayMarker(locPosition, message);
     }
   }, [location]);

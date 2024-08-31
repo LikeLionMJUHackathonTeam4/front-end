@@ -30,6 +30,7 @@ function App() {
     const [token, setToken] = useState(localStorage.getItem('jwt'));
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [reviews, setReviews] = useState([]);
+    const [isKakaoLoaded, setIsKakaoLoaded] = useState(false);  // Kakao 지도 API 로드 상태
 
     const navigate = useNavigate();
 
@@ -56,6 +57,33 @@ function App() {
             setIsAuthenticated(true);
         }
     }, [user]);
+
+    useEffect(() => {
+        // Kakao 지도 API 스크립트를 비동기로 로드
+        const loadKakaoMapScript = () => {
+            return new Promise((resolve, reject) => {
+                const kakaoAppKey = import.meta.env.VITE_KAKAO_APP_KEY;
+                const script = document.createElement('script');
+                script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${kakaoAppKey}&autoload=false`;  // autoload=false 옵션 사용
+                script.onload = () => {
+                    window.kakao.maps.load(() => { // Kakao API가 완전히 로드된 후에 실행
+                        setIsKakaoLoaded(true);
+                        resolve();
+                    });
+                };
+                script.onerror = () => reject(new Error('Kakao Map API script failed to load'));
+                document.head.appendChild(script);
+            });
+        };
+
+        loadKakaoMapScript().catch(err => {
+            console.error('Kakao Maps API 로드 실패:', err);
+        });
+    }, []);
+
+    if (!isKakaoLoaded) {
+        return <div>Loading Kakao Maps...</div>;
+    }
 
     const addToilet = (newToilet) => {
         setToilets(prevToilets => [...prevToilets, newToilet]);
@@ -90,7 +118,6 @@ function App() {
     const deleteSmoking = (id) => {
         setSmokings(prevSmokings => prevSmokings.filter(smoking => smoking.id !== id));
     };
-
 
     const addReview = (newReview) => {
         setReviews(prevReviews => [...prevReviews, newReview]);

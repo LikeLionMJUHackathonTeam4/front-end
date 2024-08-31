@@ -1,46 +1,29 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-const ToiletMap = () => {
-  const [toilets, setToilets] = useState([]);
+const ToiletMap = ({ toilets }) => {
   const [map, setMap] = useState(null);
 
   useEffect(() => {
-    // Kakao 지도 API 스크립트를 비동기로 로드
-    const loadKakaoMapScript = () => {
-      return new Promise((resolve, reject) => {
-        const script = document.createElement('script');
-        script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=0b848fbcf43b60b62e74602d3a7adfe4`;
-        script.onload = () => resolve();
-        script.onerror = () => reject(new Error('Kakao Map API script failed to load'));
-        document.head.appendChild(script);
-      });
-    };
-
-    loadKakaoMapScript()
-      .then(() => {
-        // API 스크립트가 로드된 후 Kakao 객체를 사용할 수 있음
-        initializeMap();
-      })
-      .catch(err => {
-        console.error('스크립트 로드 오류:', err);
-      });
-  }, []);
+    if (window.kakao && window.kakao.maps && window.kakao.maps.services) {
+      initializeMap();
+    }
+  }, [toilets]);
 
   const initializeMap = () => {
-    if (window.kakao) {
-      const { kakao } = window;
-      const container = document.getElementById('map');
-      const options = {
-        center: new kakao.maps.LatLng(37.5665, 126.9780), // 서울 중심 좌표
-        level: 5 // 초기 줌 레벨
-      };
-      const mapInstance = new kakao.maps.Map(container, options);
-      setMap(mapInstance);
+    const { kakao } = window;
+    const container = document.getElementById('map');
+    const options = {
+      center: new kakao.maps.LatLng(37.5665, 126.9780),
+      level: 5,
+    };
+    const mapInstance = new kakao.maps.Map(container, options);
+    setMap(mapInstance);
 
-      const geocoder = new kakao.maps.services.Geocoder(); // Geocoder 객체 생성
+    // Geocoder 객체를 생성하기 전에 kakao.maps.services가 정의되어 있는지 확인
+    if (kakao.maps.services) {
+      const geocoder = new kakao.maps.services.Geocoder();
 
-      // 지도에 화장실 마커 추가
       toilets.forEach(toilet => {
         const coords = new kakao.maps.LatLng(toilet.wsg84y, toilet.wsg84x);
         const marker = new kakao.maps.Marker({
@@ -61,7 +44,7 @@ const ToiletMap = () => {
         });
       });
     } else {
-      console.error('kakao 객체가 정의되어 있지 않습니다.');
+      console.error("kakao.maps.services is not available.");
     }
   };
 
@@ -69,7 +52,7 @@ const ToiletMap = () => {
     axios.get('http://ec2-52-79-61-245.ap-northeast-2.compute.amazonaws.com:8080/api/toilets')
       .then(response => {
         if (response.data && response.data.code === 200) {
-          setToilets(response.data.data); // 응답에서 화장실 데이터 가져오기
+          setToilets(response.data.data);
         } else {
           console.error('데이터를 가져오는 데 실패했습니다.');
         }

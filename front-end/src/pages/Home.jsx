@@ -7,13 +7,13 @@ import Navbar from '../components/Navbar';
 import Map from '../components/Map';
 import ToiletMap from '../util/ToiletMap';
 
-const Home = () => {
+const Home = ({ toilets }) => {
   const location = useLocation();
 
   return (
     <div className='Home'>
       <Map />
-      <ToiletMap />
+      <ToiletMap toilets={toilets} />
       <MapSearch />
       <TopButton />
       <Navbar currentPath={location.pathname} />
