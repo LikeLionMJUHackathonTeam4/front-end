@@ -10,7 +10,7 @@ const ToiletMap = () => {
     const loadKakaoMapScript = () => {
       return new Promise((resolve, reject) => {
         const script = document.createElement('script');
-        script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=16209dfcec751a5037b7f2983dd7c925`;
+        script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=0b848fbcf43b60b62e74602d3a7adfe4`;
         script.onload = () => resolve();
         script.onerror = () => reject(new Error('Kakao Map API script failed to load'));
         document.head.appendChild(script);
