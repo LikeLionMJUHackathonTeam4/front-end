@@ -49,7 +49,8 @@ const ToiletMap = ({ toilets }) => {
   };
 
   useEffect(() => {
-    axios.get('http://ec2-52-79-61-245.ap-northeast-2.compute.amazonaws.com:8080/api/toilets')
+    const endpoint = import.meta.env.VITE_BE_ENDPOINT;
+    axios.get(endpoint+'/api/toilets/all')
       .then(response => {
         if (response.data && response.data.code === 200) {
           setToilets(response.data.data);
