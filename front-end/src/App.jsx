@@ -123,34 +123,33 @@ function App() {
         setReviews(prevReviews => [...prevReviews, newReview]);
     };
 
+    if (!isAuthenticated) {
+        return <OAuthTest setUser={setUser} setToken={setToken} />;
+    }
+
     return (
-        <>
-            {!isAuthenticated ? (
-                <OAuthTest setUser={setUser} setToken={setToken} />
-            ) : (
-                <Routes>
-                    <Route path='/' element={<Home toilets={toilets} />} />
-                    <Route path='/search' element={<Search />} />
-                    <Route path='/info' element={<Info />} />
-                    <Route path='/description' element={<Description />} />
-                    <Route path='/review' element={<Review reviews={reviews} />} />
-                    <Route path='/newreview' element={<NewReview addReview={addReview} />} />
-                    <Route path='/editreview' element={<EditReview />} />
-                    <Route path='/myplace' element={<MyPlace toilets={toilets} onDeleteToilet={deleteToilet} />} />
-                    <Route path='/myplacesmoking' element={<MyPlaceSmoking smokings={smokings} onDeleteSmoking={deleteSmoking} />} />
-                    <Route path='/selectmyplacetoilet' element={<SelectMyPlaceToilet />} />
-                    <Route path='/selectmyplacesmoking' element={<SelectMyPlaceSmoking />} />
-                    <Route path='/newmyplacetoilet' element={<NewMyPlaceToilet addToilet={addToilet} />} />
-                    <Route path='/newmyplacesmoking' element={<NewMyPlaceSmoking addSmoking={addSmoking} />} />
-                    <Route path='/editmyplacetoilet/:id' element={<EditMyPlaceToilet toilets={toilets} onUpdateToilet={updateToilet} />} />
-                    <Route path='/editmyplacesmoking/:id' element={<EditMyPlaceSmoking smokings={smokings} onUpdateSmoking={updateSmoking} />} />
-                    <Route path='/mypage' element={<MyPage user={user} />} />
-                    <Route path='/editmyprofile' element={<EditMyProfile user={user} setUser={setUser} token={token} setToken={setToken} />} />
-                    <Route path='/myreviewlist' element={<MyReviewList />} />
-                    <Route path='/myreviewlistsmoking' element={<MyReviewListSmoking />} />
-                </Routes>
-            )}
-        </>
+
+        <Routes>
+            <Route path='/' element={<Home toilets={toilets} />} />
+            <Route path='/search' element={<Search />} />
+            <Route path='/info' element={<Info />} />
+            <Route path='/description' element={<Description />} />
+            <Route path='/review' element={<Review reviews={reviews} />} />
+            <Route path='/newreview' element={<NewReview addReview={addReview} />} />
+            <Route path='/editreview' element={<EditReview />} />
+            <Route path='/myplace' element={<MyPlace toilets={toilets} onDeleteToilet={deleteToilet} />} />
+            <Route path='/myplacesmoking' element={<MyPlaceSmoking smokings={smokings} onDeleteSmoking={deleteSmoking} />} />
+            <Route path='/selectmyplacetoilet' element={<SelectMyPlaceToilet />} />
+            <Route path='/selectmyplacesmoking' element={<SelectMyPlaceSmoking />} />
+            <Route path='/newmyplacetoilet' element={<NewMyPlaceToilet addToilet={addToilet} />} />
+            <Route path='/newmyplacesmoking' element={<NewMyPlaceSmoking addSmoking={addSmoking} />} />
+            <Route path='/editmyplacetoilet/:id' element={<EditMyPlaceToilet toilets={toilets} onUpdateToilet={updateToilet} />} />
+            <Route path='/editmyplacesmoking/:id' element={<EditMyPlaceSmoking smokings={smokings} onUpdateSmoking={updateSmoking} />} />
+            <Route path='/mypage' element={<MyPage user={user} />} />
+            <Route path='/editmyprofile' element={<EditMyProfile user={user} setUser={setUser} token={token} setToken={setToken} />} />
+            <Route path='/myreviewlist' element={<MyReviewList />} />
+            <Route path='/myreviewlistsmoking' element={<MyReviewListSmoking />} />
+        </Routes>
     );
 }
 
