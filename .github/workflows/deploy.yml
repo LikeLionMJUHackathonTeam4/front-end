@@ -13,6 +13,9 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
+    - name: Navigate to project directory  # 프로젝트 디렉토리로 이동
+      run: cd front-end
+
     - name: Install Node.js
       uses: actions/setup-node@v2
       with:
