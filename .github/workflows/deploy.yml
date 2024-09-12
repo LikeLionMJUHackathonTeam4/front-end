@@ -25,6 +25,9 @@ jobs:
     - name: Build project
       run: npm run build
       working-directory: ./front-end
+      env:
+        VITE_KAKAO_APP_KEY: ${{ secrets.VITE_KAKAO_APP_KEY }}
+        VITE_BE_ENDPOINT: ${{ secrets.VITE_BE_ENDPOINT }}
 
     - name: Deploy to S3
       run: |
