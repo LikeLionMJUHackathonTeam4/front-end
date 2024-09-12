@@ -13,9 +13,6 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Navigate to project directory  # 프로젝트 디렉토리로 이동
-      run: cd front-end
-
     - name: Install Node.js
       uses: actions/setup-node@v2
       with:
@@ -23,9 +20,11 @@ jobs:
 
     - name: Install dependencies
       run: npm install
+      working-directory: ./front-end
 
     - name: Build project
       run: npm run build
+      working-directory: ./front-end
 
     - name: Deploy to S3
       run: |
@@ -34,3 +33,4 @@ jobs:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_KEY }}
         AWS_REGION: ap-northeast-2
+      working-directory: ./front-end
