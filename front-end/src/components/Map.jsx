@@ -1,72 +1,56 @@
-import { useRef, useState, useEffect, forwardRef, useImperativeHandle } from "react";
+import React, { useEffect, useState, useImperativeHandle, forwardRef } from "react";
 
 const Map = forwardRef((props, ref) => {
-  const mapContainer = useRef(null);
-  const [location, setLocation] = useState({
-    lat: 37.46849,
-    lng: 127.0395,
-  });
+  const [location, setLocation] = useState({ lat: 37.5665, lng: 126.9780 }); // 기본 위치 (서울)
+  const [map, setMap] = useState(null);
 
   useImperativeHandle(ref, () => ({
-    updateLocation: () => {
+    updateLocation() {
+      // 사용자의 현재 위치를 다시 검색
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           (position) => {
-            setLocation({
+            const newLocation = {
               lat: position.coords.latitude,
               lng: position.coords.longitude,
-            });
+            };
+            setLocation(newLocation);
+            if (map) {
+              const moveLatLon = new window.kakao.maps.LatLng(newLocation.lat, newLocation.lng);
+              map.setCenter(moveLatLon);  // 지도 중심을 새로운 위치로 이동
+            }
           },
           (err) => {
-            console.error("Error getting location: ", err);
+            console.error("위치를 가져오는 중 오류 발생: ", err);
           }
         );
       } else {
-        console.error("Geolocation is not supported by this browser.");
+        console.error("이 브라우저는 Geolocation을 지원하지 않습니다.");
       }
-    },
+    }
   }));
 
   useEffect(() => {
-    if (mapContainer.current && window.kakao) {
-      const mapOption = {
-        center: new window.kakao.maps.LatLng(location.lat, location.lng), // 'kakao' 객체가 준비되었는지 확인
+    if (window.kakao && window.kakao.maps && location) {
+      const container = document.getElementById("mapContainer");
+      const options = {
+        center: new window.kakao.maps.LatLng(location.lat, location.lng),
         level: 3,
       };
 
-      const map = new window.kakao.maps.Map(mapContainer.current, mapOption);
+      const mapInstance = new window.kakao.maps.Map(container, options);
+      setMap(mapInstance);
 
-      function displayMarker(locPosition, message) {
-        const marker = new window.kakao.maps.Marker({
-          map: map,
-          position: locPosition,
-        });
-
-        const infowindow = new window.kakao.maps.InfoWindow({
-          content: message,
-          removable: true,
-        });
-
-        infowindow.open(map, marker);
-        map.setCenter(locPosition);
-      }
-
-      const locPosition = new window.kakao.maps.LatLng(location.lat, location.lng);
-      const message = '<div style="padding:5px;">현 위치</div>';
-      displayMarker(locPosition, message);
+      // 현재 위치에 마커 표시
+      new window.kakao.maps.Marker({
+        position: new window.kakao.maps.LatLng(location.lat, location.lng),
+        map: mapInstance,
+      });
     }
   }, [location]);
 
   return (
-    <div className="Home">
-      <div className="map-container">
-        <div
-          ref={mapContainer}
-          className="map"
-          style={{ width: "100%", height: "100vh" }}
-        ></div>
-      </div>
-    </div>
+    <div id="mapContainer" style={{ width: "100%", height: "100vh" }}></div>
   );
 });
 
