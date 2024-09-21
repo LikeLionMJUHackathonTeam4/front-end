@@ -123,9 +123,9 @@ function App() {
         setReviews(prevReviews => [...prevReviews, newReview]);
     };
 
-    if (!isAuthenticated) {
-        return <OAuthTest setUser={setUser} setToken={setToken} />;
-    }
+    // if (!isAuthenticated) {
+    //     return <OAuthTest setUser={setUser} setToken={setToken} />;
+    // }
 
     return (
 
