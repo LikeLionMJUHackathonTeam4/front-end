@@ -10,6 +10,8 @@ const Home = ({ toilets }) => {
   const location = useLocation();
   const mapRef = useRef(null);
 
+  const [toilets, setToilets] = useState(initialToilets);
+
   // 위치 재검색 함수
   const updateLocation = () => {
     if (mapRef.current) {
@@ -19,7 +21,7 @@ const Home = ({ toilets }) => {
 
   return (
     <div className='Home'>
-      <Map ref={mapRef} />  {/* ref로 Map 컴포넌트에 접근 */}
+      <Map ref={mapRef} toilets={toilets} />  {/* ref로 Map 컴포넌트에 접근 */}
       <MapSearch />
       <TopButton />
       <Navbar currentPath={location.pathname} updateLocation={updateLocation} />
