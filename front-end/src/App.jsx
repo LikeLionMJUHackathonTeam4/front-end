@@ -130,7 +130,7 @@ function App() {
     return (
 
         <Routes>
-            <Route path='/' element={<Home toilets={toilets} />} />
+            <Route path='/' element={<Home />} />
             <Route path='/search' element={<Search />} />
             <Route path='/info' element={<Info />} />
             <Route path='/description' element={<Description />} />

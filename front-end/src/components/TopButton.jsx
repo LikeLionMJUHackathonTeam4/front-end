@@ -3,10 +3,10 @@ import toiletIcon from '../image/toilet.svg'
 import smokingIcon from '../image/smoking.svg'
 import bookmarkIcon from '../image/bookmark.svg'
 
-const TopButton = () => {
+const TopButton = ({ fetchToiletData }) => {
     return (
         <div className="TopButton">
-            <button className="toilet">
+            <button className="toilet" onClick={fetchToiletData}>
                 <img src={toiletIcon} /> 화장실
             </button>
             <button className="smoking">

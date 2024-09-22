@@ -3,6 +3,7 @@ import React, { useEffect, useState, useImperativeHandle, forwardRef } from "rea
 const Map = forwardRef((props, ref) => {
   const [location, setLocation] = useState({ lat: 37.5665, lng: 126.9780 }); // 기본 위치 (서울)
   const [map, setMap] = useState(null);
+  const [markers, setMarkers] = useState([]); // 마커 상태 관리
 
   useImperativeHandle(ref, () => ({
     updateLocation() {
@@ -27,7 +28,21 @@ const Map = forwardRef((props, ref) => {
       } else {
         console.error("이 브라우저는 Geolocation을 지원하지 않습니다.");
       }
-    }
+    },
+    addMarkers(toilets) {
+        // 기존 마커 제거
+        markers.forEach(marker => marker.setMap(null));
+        const newMarkers = toilets.map(toilet => {
+          const markerPosition = new window.kakao.maps.LatLng(toilet.wsg84y, toilet.wsg84x);
+          const marker = new window.kakao.maps.Marker({
+            position: markerPosition,
+            map: map,
+            title: toilet.name // 마커에 화장실 이름 추가
+          });
+          return marker;
+        });
+        setMarkers(newMarkers); // 새로운 마커 상태 업데이트
+      }
   }));
 
   useEffect(() => {
