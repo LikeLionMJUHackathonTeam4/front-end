@@ -1,0 +1,39 @@
+name: Deploy to S3
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Install Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '16'
+
+    - name: Install dependencies
+      run: npm install
+      working-directory: ./front-end
+
+    - name: Build project
+      run: npm run build
+      working-directory: ./front-end
+      env:
+        VITE_KAKAO_APP_KEY: ${{ secrets.VITE_KAKAO_APP_KEY }}
+        VITE_BE_ENDPOINT: ${{ secrets.VITE_BE_ENDPOINT }}
+
+    - name: Deploy to S3
+      run: |
+        aws s3 sync ./dist s3://ohmystomach --delete
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_KEY }}
+        AWS_REGION: ap-northeast-2
+      working-directory: ./front-end
