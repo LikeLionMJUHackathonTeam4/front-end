@@ -19,7 +19,7 @@ const Home = () => {
     // 화장실 데이터 불러오기 함수
     const fetchToiletData = async () => {
         try {
-            const response = await axios.get(`${baseUrl}/toilets/all`); // 실제 API 경로로 변경
+            const response = await axios.get(`/toilets/all`); // 실제 API 경로로 변경
             if (response.data && response.data.code === 200) {
                 console.error('화장실 데이터 출력:', response.data.data);
                 setToilets(response.data.data);
