@@ -1,5 +1,6 @@
 // create-vercel-config.js
 import { writeFileSync } from 'fs';
+import path from 'path';
 import dotenv from 'dotenv'; // dotenv 패키지 불러오기
 
 // 환경 변수 로드
