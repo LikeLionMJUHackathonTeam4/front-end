@@ -1,5 +1,6 @@
 // create-vercel-config.js
 import { writeFileSync } from 'fs';
+import { fileURLToPath } from 'url'; // ES 모듈의 현재 경로를 가져오기 위한 모듈
 import path from 'path';
 import dotenv from 'dotenv'; // dotenv 패키지 불러오기
 
@@ -14,6 +15,10 @@ if (!apiUrl) {
     process.exit(1); // 오류 발생 시 스크립트 종료
 }
 console.log('VITE_BE_ENDPOINT:', apiUrl);
+
+// ES 모듈에서 __dirname을 대체하는 방식
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // vercel.json 파일의 생성 경로를 프로젝트 루트로 설정
 const vercelJsonPath = path.resolve(__dirname, 'vercel.json');
