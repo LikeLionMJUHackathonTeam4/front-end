@@ -1,0 +1,8 @@
+{
+    "scripts": {
+      "prebuild": "cd front-end && node create-vercel-config.js",
+      "dev": "cd front-end && npm run dev",
+      "lint": "cd front-end && npm run lint",
+      "preview": "cd front-end && npm run preview"
+    }
+  }
