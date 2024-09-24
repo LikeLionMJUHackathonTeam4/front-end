@@ -14,6 +14,9 @@ if (!apiUrl) {
 }
 console.log('VITE_BE_ENDPOINT:', apiUrl);
 
+// vercel.json 파일의 생성 경로를 프로젝트 루트로 설정
+const vercelJsonPath = path.resolve(__dirname, 'vercel.json');
+
 // vercel.json 파일 생성
 const vercelConfig = {
   rewrites: [
@@ -30,7 +33,7 @@ const vercelConfig = {
 
 // vercel.json 파일을 생성하고 저장
 try {
-  writeFileSync('vercel.json', JSON.stringify(vercelConfig, null, 2));
+  writeFileSync(vercelJsonPath, JSON.stringify(vercelConfig, null, 2));
   console.log('vercel.json 파일이 성공적으로 생성되었습니다.');
 } catch (error) {
   console.error('vercel.json 파일 생성 중 오류 발생:', error);
