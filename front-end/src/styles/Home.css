@@ -16,14 +16,14 @@
     position: absolute;
     /* top: 1px;
     left: 23px; */
-    top: 10px;
+    top: -50px;
     /* left: 20px; */
     z-index: 10;
 }
 
 .Home .TopButton {
     position: absolute;
-    top: 160px;
+    top: 100px;
     /* left: 23px; */
     left: 20px;
     z-index: 10;
