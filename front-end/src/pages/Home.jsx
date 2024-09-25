@@ -66,10 +66,12 @@ const Home = () => {
 
     return (
         <div className='Home'>
-        <Map ref={mapRef} toilets={toilets} />  {/* ref로 Map 컴포넌트에 접근 */}
-        <MapSearch />
-        <TopButton fetchToiletData={fetchToiletData}/>
-        <Navbar currentPath={location.pathname} updateLocation={updateLocation} />
+            <div className="map-wrapper">
+                <Map ref={mapRef} toilets={toilets} />  {/* ref로 Map 컴포넌트에 접근 */}
+                <MapSearch />
+                <TopButton fetchToiletData={fetchToiletData}/>
+            </div>
+            <Navbar currentPath={location.pathname} updateLocation={updateLocation} />
         </div>
     );
 };

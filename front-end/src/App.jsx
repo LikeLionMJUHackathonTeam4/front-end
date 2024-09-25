@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
+import './App.css';
 import Home from './pages/Home';
 import Search from './pages/Search';
 import Info from './pages/Info';
@@ -128,28 +129,29 @@ function App() {
     // }
 
     return (
-
-        <Routes>
-            <Route path='/' element={<Home />} />
-            <Route path='/search' element={<Search />} />
-            <Route path='/info' element={<Info />} />
-            <Route path='/description' element={<Description />} />
-            <Route path='/review' element={<Review reviews={reviews} />} />
-            <Route path='/newreview' element={<NewReview addReview={addReview} />} />
-            <Route path='/editreview' element={<EditReview />} />
-            <Route path='/myplace' element={<MyPlace toilets={toilets} onDeleteToilet={deleteToilet} />} />
-            <Route path='/myplacesmoking' element={<MyPlaceSmoking smokings={smokings} onDeleteSmoking={deleteSmoking} />} />
-            <Route path='/selectmyplacetoilet' element={<SelectMyPlaceToilet />} />
-            <Route path='/selectmyplacesmoking' element={<SelectMyPlaceSmoking />} />
-            <Route path='/newmyplacetoilet' element={<NewMyPlaceToilet addToilet={addToilet} />} />
-            <Route path='/newmyplacesmoking' element={<NewMyPlaceSmoking addSmoking={addSmoking} />} />
-            <Route path='/editmyplacetoilet/:id' element={<EditMyPlaceToilet toilets={toilets} onUpdateToilet={updateToilet} />} />
-            <Route path='/editmyplacesmoking/:id' element={<EditMyPlaceSmoking smokings={smokings} onUpdateSmoking={updateSmoking} />} />
-            <Route path='/mypage' element={<MyPage user={user} />} />
-            <Route path='/editmyprofile' element={<EditMyProfile user={user} setUser={setUser} token={token} setToken={setToken} />} />
-            <Route path='/myreviewlist' element={<MyReviewList />} />
-            <Route path='/myreviewlistsmoking' element={<MyReviewListSmoking />} />
-        </Routes>
+        // <div className="app-container">
+            <Routes>
+                <Route path='/' element={<Home />} />
+                <Route path='/search' element={<Search />} />
+                <Route path='/info' element={<Info />} />
+                <Route path='/description' element={<Description />} />
+                <Route path='/review' element={<Review reviews={reviews} />} />
+                <Route path='/newreview' element={<NewReview addReview={addReview} />} />
+                <Route path='/editreview' element={<EditReview />} />
+                <Route path='/myplace' element={<MyPlace toilets={toilets} onDeleteToilet={deleteToilet} />} />
+                <Route path='/myplacesmoking' element={<MyPlaceSmoking smokings={smokings} onDeleteSmoking={deleteSmoking} />} />
+                <Route path='/selectmyplacetoilet' element={<SelectMyPlaceToilet />} />
+                <Route path='/selectmyplacesmoking' element={<SelectMyPlaceSmoking />} />
+                <Route path='/newmyplacetoilet' element={<NewMyPlaceToilet addToilet={addToilet} />} />
+                <Route path='/newmyplacesmoking' element={<NewMyPlaceSmoking addSmoking={addSmoking} />} />
+                <Route path='/editmyplacetoilet/:id' element={<EditMyPlaceToilet toilets={toilets} onUpdateToilet={updateToilet} />} />
+                <Route path='/editmyplacesmoking/:id' element={<EditMyPlaceSmoking smokings={smokings} onUpdateSmoking={updateSmoking} />} />
+                <Route path='/mypage' element={<MyPage user={user} />} />
+                <Route path='/editmyprofile' element={<EditMyProfile user={user} setUser={setUser} token={token} setToken={setToken} />} />
+                <Route path='/myreviewlist' element={<MyReviewList />} />
+                <Route path='/myreviewlistsmoking' element={<MyReviewListSmoking />} />
+            </Routes>
+        // </div>
     );
 }
 
