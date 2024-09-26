@@ -16,17 +16,17 @@ const OAuthTest = ({ setUser, setToken }) => {
       try {
         // 카카오 로그인 콜백 처리
         const token = await kakaoLoginCallback(code);
-        localStorage.setItem('jwt', token); // JWT 저장
+        localStorage.setItem('token', token); // JWT 대신 token으로 통일
         setToken(token);
         
         // 사용자 정보 가져오기
         const userData = await getUserInfo(token);
         setUser(userData);
-        setLoginStatus('Login successful!');
+        // setLoginStatus('Login successful!');
         navigate('/'); // 로그인 후 메인 페이지로 리디렉션
       } catch (error) {
         console.error('Error during callback handling:', error);
-        setLoginStatus(`Login failed: ${error.response?.data?.message || 'Unknown error'}`);
+        // setLoginStatus(`Login failed: ${error.response?.data?.message || 'Unknown error'}`);
       }
     }
   };

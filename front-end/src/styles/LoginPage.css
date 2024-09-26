@@ -1,0 +1,63 @@
+/* 로그인 페이지 스타일 */
+.login-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: white;
+    max-width: 478px;
+    margin: 0 auto; /* 중앙 정렬 */
+    padding: 20px; /* 페이지 패딩 추가 */
+    box-sizing: border-box; /* 패딩과 보더가 전체 너비와 높이에 포함되도록 설정 */
+}
+
+/* 제목 스타일 */
+.login-page h2 {
+    font-size: 18px; /* 적당한 크기로 조정 */
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px; /* 제목과 버튼 간의 간격 조정 */
+    text-align: center; /* 텍스트 중앙 정렬 */
+}
+
+/* 카카오 로그인 버튼 스타일 */
+.kakao-login-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fee500;
+    width: 100%;
+    max-width: 380px;
+    height: 50px;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #3c1e1e; /* 카카오 로그인 버튼 텍스트 색상 */
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* 배경색 전환 애니메이션 */
+    margin-top: 20px; /* 버튼과 상단 요소 간의 간격 */
+}
+
+/* 마우스 오버 시 버튼 색상 변경 */
+.kakao-login-button:hover {
+    background-color: #ffd700;
+}
+
+/* 반응형 처리 */
+@media (max-width: 478px) {
+    .login-page {
+        padding: 15px;
+    }
+
+    .login-page h2 {
+        font-size: 16px;
+    }
+
+    .kakao-login-button {
+        width: 100%;
+        max-width: none;
+        height: 45px;
+        font-size: 14px;
+    }
+}

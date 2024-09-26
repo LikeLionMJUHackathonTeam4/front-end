@@ -1,4 +1,3 @@
-// UserProfile.js
 import React from 'react';
 import '../styles/UserProfile.css'; // UserProfile 스타일 파일
 
