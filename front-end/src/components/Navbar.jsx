@@ -66,7 +66,7 @@ const Navbar = ({ currentPath, updateLocation, isAuthenticated }) => {
         } else {
             navigate(path); // 로그인 되어 있으면 원래 경로로 이동
         }
-    };
+    };    
 
     const isHome = currentPath === '/';
     const isMyPage = currentPath === '/mypage';

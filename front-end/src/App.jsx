@@ -37,6 +37,16 @@ function App() {
     const navigate = useNavigate();
 
     useEffect(() => {
+        const storedToken = localStorage.getItem('token');
+        if (storedToken) {
+            setToken(storedToken);
+            setIsAuthenticated(true);
+        } else {
+            setIsAuthenticated(false);
+        }
+    }, [setToken]);    
+
+    useEffect(() => {
         if (token) {
             setIsAuthenticated(true);
         } else {

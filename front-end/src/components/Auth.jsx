@@ -7,6 +7,17 @@ const Auth = ({ setUser, setToken }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (token) {
+        localStorage.setItem('token', token);
+        setIsAuthenticated(true);
+    } else {
+        localStorage.removeItem('token');
+        setIsAuthenticated(false);
+    }
+}, [token]);
+
+
+  useEffect(() => {
     const token = localStorage.getItem('token');
     const urlParams = new URLSearchParams(window.location.search);
     const code = urlParams.get('code');
