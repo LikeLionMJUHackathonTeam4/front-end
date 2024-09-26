@@ -10,7 +10,7 @@ const Auth = () => {
       const loginUrl = await getKakaoLoginUrl();
       window.location.href = loginUrl;
     } catch (error) {
-      console.error('Error fetching Kakao login URL:', error);
+        console.error('Error fetching Kakao login URL:', error);
     }
   };
 
@@ -28,12 +28,24 @@ const Auth = () => {
   }, []);
 
   useEffect(() => {
+    const token = localStorage.getItem('token');
     if (token) {
-      getUserInfo(token)
-        .then(userData => setUser(userData))
-        .catch(error => console.error('Get User Info Error:', error));
+        getUserInfo(token)
+            .then(userData => {
+                if (userData) {
+                    setUser(userData); // 유저 정보가 있으면 저장
+                } else {
+                    // user가 없을 경우 재로그인
+                    navigate('/login');
+                }
+            })
+            .catch(() => {
+                navigate('/login');  // 오류 발생 시 로그인 페이지로 리디렉션
+            });
+    } else {
+        navigate('/login');  // 토큰이 없으면 로그인 페이지로 이동
     }
-  }, [token]);
+  }, [navigate]);
 
   const handleLogout = async () => {
     try {

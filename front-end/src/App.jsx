@@ -23,6 +23,7 @@ import MyReviewListSmoking from './pages/MyReviewListSmoking';
 import OAuthTest from './components/OAuthTest';
 import initialToilets from './util/initialToilets';
 import initialSmokings from './util/initialSmokings';
+import LoginPage from './pages/LoginPage';
 
 function App() {
     const [toilets, setToilets] = useState(initialToilets);
@@ -54,7 +55,7 @@ function App() {
     useEffect(() => {
         if (user) {
             localStorage.setItem('user', JSON.stringify(user));
-            setToken(localStorage.getItem('jwt'));
+            setToken(localStorage.getItem('token'));
             setIsAuthenticated(true);
         }
     }, [user]);
@@ -129,7 +130,7 @@ function App() {
     // }
 
     return (
-        // <div className="app-container">
+        <div className="app-container">
             <Routes>
                 <Route path='/' element={<Home />} />
                 <Route path='/search' element={<Search />} />
@@ -150,8 +151,10 @@ function App() {
                 <Route path='/editmyprofile' element={<EditMyProfile user={user} setUser={setUser} token={token} setToken={setToken} />} />
                 <Route path='/myreviewlist' element={<MyReviewList />} />
                 <Route path='/myreviewlistsmoking' element={<MyReviewListSmoking />} />
+                <Route path='/login' element={<LoginPage />} />
+                
             </Routes>
-        // </div>
+        </div>
     );
 }
 

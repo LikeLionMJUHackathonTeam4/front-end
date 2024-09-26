@@ -1,5 +1,32 @@
 import axios from 'axios';
 
+const api = axios.create({
+    baseURL: 'http://yourapiurl.com/api',  // 여기에 실제 API의 기본 URL을 입력하세요
+    headers: {
+        'Content-Type': 'application/json',
+    },
+});
+
+// Create (POST)
+export const createToilet = (toiletData) => {
+    return api.post('/toilets', toiletData);
+};
+
+// Read (GET)
+export const getToilets = () => {
+    return api.get('/toilets');
+};
+
+// Update (PUT)
+export const updateToilet = (id, toiletData) => {
+    return api.put(`/toilets/${id}`, toiletData);
+};
+
+// Delete (DELETE)
+export const deleteToilet = (id) => {
+    return api.delete(`/toilets/${id}`);
+};
+// 흡연구역도 동일하게 api 구조 작성
 const endpoint = import.meta.env.VITE_BE_ENDPOINT;
 const baseUrl = endpoint+'/oauth';
 
@@ -16,11 +43,15 @@ export const kakaoLoginCallback = async (code) => {
 };
 
 export const getUserInfo = async (token) => {
-  const response = await axios.get(`${baseUrl}/user`, {
-    headers: {
-      'Authorization': `Bearer ${token}`
-    }
-  });
+  try {
+    const response = await axios.get('/api/userinfo', { 
+        headers: { Authorization: `Bearer ${token}` } 
+    });
+    return response.data;  // 정상 응답일 경우 사용자 데이터 반환
+} catch (error) {
+    console.error('Error fetching user info:', error.response?.data || error.message);
+    throw error;  // 에러 발생 시 호출한 쪽에서 처리할 수 있도록 에러 전달
+}
   return response.data.data;
 };
 
