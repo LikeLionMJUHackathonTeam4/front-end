@@ -7,7 +7,7 @@ import Navbar from '../components/Navbar';
 import Map from '../components/Map';
 import axios from 'axios';
 
-const Home = () => {
+const Home = (isAuthenticated) => {
     const endpoint = import.meta.env.VITE_BE_ENDPOINT;
     const baseUrl = endpoint+'/api';
 
@@ -82,7 +82,7 @@ const Home = () => {
                 <MapSearch />
                 <TopButton fetchToiletData={fetchToiletData} showToiletMarkers={showToiletMarkers} setShowToiletMarkers={setShowToiletMarkers} />
             </div>
-            <Navbar currentPath={location.pathname} updateLocation={updateLocation} />
+            <Navbar isAuthenticated = {isAuthenticated} currentPath={location.pathname} updateLocation={updateLocation} />
         </div>
     );
 };

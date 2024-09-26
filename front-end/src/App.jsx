@@ -132,7 +132,7 @@ function App() {
     return (
         <div className="app-container">
             <Routes>
-                <Route path='/' element={<Home />} />
+                <Route path='/' element={<Home isAuthenticated={isAuthenticated}/>} />
                 <Route path='/search' element={<Search />} />
                 <Route path='/info' element={<Info />} />
                 <Route path='/description' element={<Description />} />

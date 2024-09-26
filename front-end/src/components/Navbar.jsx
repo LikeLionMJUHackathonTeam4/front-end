@@ -44,7 +44,7 @@ import mypageIcon from '../image/mypage.svg';
 import gpsIcon from '../image/gps.svg';
 import { getUserInfo } from '../api'; // 사용자 정보를 가져오는 함수
 
-const Navbar = ({ currentPath, updateLocation }) => {
+const Navbar = ({ currentPath, updateLocation, isAuthenticated }) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const navigate = useNavigate();
     
@@ -62,7 +62,7 @@ const Navbar = ({ currentPath, updateLocation }) => {
     }, []);
 
     const handleLinkClick = (path) => {
-        if (!isLoggedIn && (path === '/mypage' || path === '/myplace')) {
+        if (!isAuthenticated && (path === '/mypage' || path === '/myplace')) {
             navigate('/login'); // 로그인 안 되어 있으면 로그인 페이지로 이동
         } else {
             navigate(path); // 로그인 되어 있으면 원래 경로로 이동
