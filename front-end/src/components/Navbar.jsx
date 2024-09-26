@@ -62,10 +62,8 @@ const Navbar = ({ currentPath, updateLocation, isAuthenticated }) => {
 
     const handleLinkClick = (path) => {
         if (!isAuthenticated && (path === '/mypage' || path === '/myplace')) {
-            console.log("로그인 안되어 있음.")
             navigate('/login'); // 로그인 안 되어 있으면 로그인 페이지로 이동
         } else {
-            console.log("로그인 되어 있음.")
             navigate(path); // 로그인 되어 있으면 원래 경로로 이동
         }
     };    
