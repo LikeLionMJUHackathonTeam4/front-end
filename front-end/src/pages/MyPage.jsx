@@ -13,6 +13,7 @@ const MyPage = ({ user }) => {
         return <div>User not found</div>;
     }
 
+
     return (
         <div className="MyPage">
             <Header

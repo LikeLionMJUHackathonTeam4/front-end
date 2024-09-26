@@ -1,73 +1,59 @@
-import React, { useEffect, useState } from 'react';
-import { getKakaoLoginUrl, kakaoLoginCallback, getUserInfo, logout } from '../api';
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { kakaoLoginCallback, getUserInfo } from '../api';
+import KakaoLoginButton from './KakaoLoginButton';
 
-const Auth = () => {
-  const [user, setUser] = useState(null);
-  const [token, setToken] = useState(localStorage.getItem('token'));
-
-  const handleLogin = async () => {
-    try {
-      const loginUrl = await getKakaoLoginUrl();
-      window.location.href = loginUrl;
-    } catch (error) {
-        console.error('Error fetching Kakao login URL:', error);
-    }
-  };
-
-  useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const code = urlParams.get('code');
-    if (code) {
-      kakaoLoginCallback(code)
-        .then(token => {
-          localStorage.setItem('token', token);
-          setToken(token);
-        })
-        .catch(error => console.error('Callback Error:', error));
-    }
-  }, []);
+const Auth = ({ setUser, setToken }) => {
+  const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    if (token) {
-        getUserInfo(token)
-            .then(userData => {
-                if (userData) {
-                    setUser(userData); // 유저 정보가 있으면 저장
-                } else {
-                    // user가 없을 경우 재로그인
-                    navigate('/login');
-                }
-            })
-            .catch(() => {
-                navigate('/login');  // 오류 발생 시 로그인 페이지로 리디렉션
-            });
-    } else {
-        navigate('/login');  // 토큰이 없으면 로그인 페이지로 이동
-    }
-  }, [navigate]);
 
-  const handleLogout = async () => {
-    try {
-      await logout(token);
-      localStorage.removeItem('token');
-      setToken(null);
-      setUser(null);
-    } catch (error) {
-      console.error('Logout Error:', error);
+    if (token) {
+      // 이미 토큰이 존재한다면 바로 사용자 정보를 가져옴
+      getUserInfo(token)
+        .then(userData => {
+          setUser(userData);
+          navigate('/'); // 메인 페이지로 이동
+        })
+        .catch(error => {
+          console.error('유효하지 않은 토큰입니다:', error);
+          localStorage.removeItem('token');
+          navigate('/login');
+        });
+    } else {
+      const urlParams = new URLSearchParams(window.location.search);
+      const code = urlParams.get('code');
+      console.log('Received code:', code);
+
+      if (code) {
+        // code가 존재할 때만 로그인 콜백을 실행합니다.
+        console.log('카카오 로그인 코드:', code);
+
+        kakaoLoginCallback(code)
+          .then(token => {
+            console.log('받은 토큰:', token);
+            localStorage.setItem('token', token);
+            setToken(token);
+            return getUserInfo(token); // 받은 토큰으로 사용자 정보를 가져옴
+          })
+          .then(userData => {
+            console.log('사용자 정보:', userData);
+            localStorage.setItem('user', JSON.stringify(userData));
+            setUser(userData);
+            navigate('/'); // 로그인 후 메인 페이지로 이동
+          })
+          .catch(error => {
+            console.error('로그인 처리 중 오류 발생:', error);
+            navigate('/login');
+          });
+      }
     }
-  };
+  }, [navigate, setUser, setToken]);
 
   return (
     <div>
-      {!token ? (
-        <button onClick={handleLogin}>Login with Kakao</button>
-      ) : (
-        <div>
-          <h2>Welcome, {user?.nickname}</h2>
-          <button onClick={handleLogout}>Logout</button>
-        </div>
-      )}
+      <KakaoLoginButton />
     </div>
   );
 };

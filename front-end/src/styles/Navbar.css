@@ -20,7 +20,7 @@
 .Navbar {
     width: 100%; /* 네비게이션 바의 너비를 100%로 설정하여 화면 전체를 차지 */
     max-width: 478px; /* 최대 너비 제한 설정 */
-    height: 90px; /* 높이를 적절히 줄여서 화면 차지 공간 감소 */
+    height: 80px; /* 높이를 적절히 줄여서 화면 차지 공간 감소 */
     flex-shrink: 0;
     background: var(--White, #FFF);
     display: flex;
@@ -31,6 +31,7 @@
 }
 
 .bookmarkNav, .selectHome, .mypage {
+    padding: 0px;
     border: none;
     background-color: #FFF;
     text-decoration: none; /* 링크 밑줄 제거 */
