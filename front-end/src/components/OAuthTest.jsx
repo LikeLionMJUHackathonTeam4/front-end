@@ -26,7 +26,7 @@ const OAuthTest = ({ setUser, setToken }) => {
         navigate('/'); // 로그인 후 메인 페이지로 리디렉션
       } catch (error) {
         console.error('Error during callback handling:', error);
-        // setLoginStatus(`Login failed: ${error.response?.data?.message || 'Unknown error'}`);
+        // setLoginStatus(Login failed: ${error.response?.data?.message || 'Unknown error'});
       }
     }
   };
