@@ -3,10 +3,15 @@ import toiletIcon from '../image/toilet.svg'
 import smokingIcon from '../image/smoking.svg'
 import bookmarkIcon from '../image/bookmark.svg'
 
-const TopButton = ({ fetchToiletData }) => {
+const TopButton = ({ showToiletMarkers, setShowToiletMarkers }) => {
+    const handleToiletButtonClick = () => {
+        // 마커 표시 여부 토글
+        setShowToiletMarkers(prev => !prev);
+    };
+
     return (
         <div className="TopButton">
-            <button className="toilet" onClick={fetchToiletData}>
+            <button className="toilet" onClick={handleToiletButtonClick}>
                 <img src={toiletIcon} /> 화장실
             </button>
             <button className="smoking">
