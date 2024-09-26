@@ -20,16 +20,16 @@ import MyPage from './pages/MyPage';
 import EditMyProfile from './pages/EditMyProfile';
 import MyReviewList from './pages/MyReviewList';
 import MyReviewListSmoking from './pages/MyReviewListSmoking';
-import OAuthTest from './components/OAuthTest';
 import initialToilets from './util/initialToilets';
 import initialSmokings from './util/initialSmokings';
 import LoginPage from './pages/LoginPage';
+import Auth from './components/Auth';
 
 function App() {
     const [toilets, setToilets] = useState(initialToilets);
     const [smokings, setSmokings] = useState(initialSmokings);
     const [user, setUser] = useState(null);
-    const [token, setToken] = useState(localStorage.getItem('jwt'));
+    const [token, setToken] = useState(localStorage.getItem('token'));
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [reviews, setReviews] = useState([]);
     const [isKakaoLoaded, setIsKakaoLoaded] = useState(false);  // Kakao 지도 API 로드 상태
@@ -139,20 +139,20 @@ function App() {
                 <Route path='/review' element={<Review reviews={reviews} />} />
                 <Route path='/newreview' element={<NewReview addReview={addReview} />} />
                 <Route path='/editreview' element={<EditReview />} />
-                <Route path='/myplace' element={<MyPlace toilets={toilets} onDeleteToilet={deleteToilet} />} />
-                <Route path='/myplacesmoking' element={<MyPlaceSmoking smokings={smokings} onDeleteSmoking={deleteSmoking} />} />
-                <Route path='/selectmyplacetoilet' element={<SelectMyPlaceToilet />} />
-                <Route path='/selectmyplacesmoking' element={<SelectMyPlaceSmoking />} />
-                <Route path='/newmyplacetoilet' element={<NewMyPlaceToilet addToilet={addToilet} />} />
-                <Route path='/newmyplacesmoking' element={<NewMyPlaceSmoking addSmoking={addSmoking} />} />
-                <Route path='/editmyplacetoilet/:id' element={<EditMyPlaceToilet toilets={toilets} onUpdateToilet={updateToilet} />} />
-                <Route path='/editmyplacesmoking/:id' element={<EditMyPlaceSmoking smokings={smokings} onUpdateSmoking={updateSmoking} />} />
-                <Route path='/mypage' element={<MyPage user={user} />} />
-                <Route path='/editmyprofile' element={<EditMyProfile user={user} setUser={setUser} token={token} setToken={setToken} />} />
-                <Route path='/myreviewlist' element={<MyReviewList />} />
-                <Route path='/myreviewlistsmoking' element={<MyReviewListSmoking />} />
+                <Route path='/myplace' element={<MyPlace toilets={toilets} onDeleteToilet={deleteToilet} isAuthenticated={isAuthenticated} />} />
+                <Route path='/myplacesmoking' element={<MyPlaceSmoking smokings={smokings} onDeleteSmoking={deleteSmoking} isAuthenticated={isAuthenticated} />} />
+                <Route path='/selectmyplacetoilet' element={<SelectMyPlaceToilet isAuthenticated={isAuthenticated}/>} />
+                <Route path='/selectmyplacesmoking' element={<SelectMyPlaceSmoking isAuthenticated={isAuthenticated}/>} />
+                <Route path='/newmyplacetoilet' element={<NewMyPlaceToilet addToilet={addToilet} isAuthenticated={isAuthenticated}/>} />
+                <Route path='/newmyplacesmoking' element={<NewMyPlaceSmoking addSmoking={addSmoking} isAuthenticated={isAuthenticated}/>} />
+                <Route path='/editmyplacetoilet/:id' element={<EditMyPlaceToilet toilets={toilets} onUpdateToilet={updateToilet} isAuthenticated={isAuthenticated}/>} />
+                <Route path='/editmyplacesmoking/:id' element={<EditMyPlaceSmoking smokings={smokings} onUpdateSmoking={updateSmoking} isAuthenticated={isAuthenticated}/>} />
+                <Route path='/mypage' element={<MyPage user={user} isAuthenticated={isAuthenticated}/>} />
+                <Route path='/editmyprofile' element={<EditMyProfile user={user} setUser={setUser} token={token} setToken={setToken} isAuthenticated={isAuthenticated}/>} />
+                <Route path='/myreviewlist' element={<MyReviewList isAuthenticated={isAuthenticated}/>} />
+                <Route path='/myreviewlistsmoking' element={<MyReviewListSmoking isAuthenticated={isAuthenticated}/>} />
                 <Route path='/login' element={<LoginPage />} />
-                
+                <Route path='/auth' element={<Auth setUser={setUser} setToken={setToken} />} />
             </Routes>
         </div>
     );

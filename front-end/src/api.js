@@ -1,32 +1,5 @@
 import axios from 'axios';
 
-const api = axios.create({
-    baseURL: 'http://yourapiurl.com/api',  // 여기에 실제 API의 기본 URL을 입력하세요
-    headers: {
-        'Content-Type': 'application/json',
-    },
-});
-
-// Create (POST)
-export const createToilet = (toiletData) => {
-    return api.post('/toilets', toiletData);
-};
-
-// Read (GET)
-export const getToilets = () => {
-    return api.get('/toilets');
-};
-
-// Update (PUT)
-export const updateToilet = (id, toiletData) => {
-    return api.put(`/toilets/${id}`, toiletData);
-};
-
-// Delete (DELETE)
-export const deleteToilet = (id) => {
-    return api.delete(`/toilets/${id}`);
-};
-// 흡연구역도 동일하게 api 구조 작성
 const endpoint = import.meta.env.VITE_BE_ENDPOINT;
 const baseUrl = endpoint+'/oauth';
 

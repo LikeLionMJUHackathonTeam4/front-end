@@ -38,7 +38,7 @@ const OAuthTest = ({ setUser, setToken }) => {
   return (
     <div className="oauth-test-container">
         <strong>흡변구역 서비스를 이용하려면 카카오 로그인이 필요합니다</strong>
-      <KakaoLoginButton /> {/* 카카오 로그인 버튼 추가 */}
+      <KakaoLoginButton />
     </div>
   );
 };

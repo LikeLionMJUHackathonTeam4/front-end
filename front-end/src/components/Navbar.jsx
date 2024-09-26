@@ -35,7 +35,7 @@
 // export default Navbar;
 
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import '../styles/Navbar.css';
 import bookmarkNavIcon from '../image/bookmarkNav.svg';
 import selectHomeIcon from '../image/selectHome.svg';
@@ -45,10 +45,9 @@ import gpsIcon from '../image/gps.svg';
 import { getUserInfo } from '../api'; // 사용자 정보를 가져오는 함수
 
 const Navbar = ({ currentPath, updateLocation, isAuthenticated }) => {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const navigate = useNavigate();
     
-    useEffect(() => {
+    /*useEffect(() => {
         const token = localStorage.getItem('token');
         if (token) {
             getUserInfo(token)
@@ -59,7 +58,7 @@ const Navbar = ({ currentPath, updateLocation, isAuthenticated }) => {
                     setIsLoggedIn(false);
                 });
         }
-    }, []);
+    }, []);*/
 
     const handleLinkClick = (path) => {
         if (!isAuthenticated && (path === '/mypage' || path === '/myplace')) {
