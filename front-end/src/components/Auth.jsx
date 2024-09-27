@@ -67,6 +67,7 @@ const Auth = ({ setUser, setToken, setIsAuthenticated }) => {
     const endpoint = import.meta.env.VITE_BE_ENDPOINT;
     const baseUrl = endpoint+'/oauth';
 
+    console.log("auth");
     useEffect(() => {
         const fetchToken = async () => {
             const urlParams = new URLSearchParams(window.location.search);
