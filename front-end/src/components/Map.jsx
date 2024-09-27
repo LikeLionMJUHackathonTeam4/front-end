@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useImperativeHandle, forwardRef } from "react";
 import toiletPointIcon from '../image/toiletPoint.svg';
-import myToiletIcon from "../image/Mytoilet.svg";
+import myToiletIcon from "../image/myToilet.svg";
 
 const Map = forwardRef((props, ref) => {
   const { toilets } = props;
