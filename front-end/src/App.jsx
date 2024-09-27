@@ -35,6 +35,8 @@ function App() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [reviews, setReviews] = useState([]);
     const [isKakaoLoaded, setIsKakaoLoaded] = useState(false);  // Kakao 지도 API 로드 상태
+    const [loading, setLoading] = useState(false); // 로딩 상태 추가
+    const [error, setError] = useState(null); // 에러 상태 추가
 
     const navigate = useNavigate();
 
@@ -71,6 +73,7 @@ function App() {
     useEffect(() => {
         // 화장실 목록을 가져오는 함수
         const fetchToilets = async () => {
+            setLoading(true); // 로딩 상태 시작
             try {
                 const config = {
                     // 토큰을 Authorization 헤더에 포함
@@ -101,6 +104,7 @@ function App() {
     useEffect(() => {
         // 흡연구역 목록을 가져오는 함수
         const fetchSmokings = async () => {
+            setLoading(true); // 로딩 상태 시작
             try {
                 const config = {
                     // 토큰을 Authorization 헤더에 포함
@@ -248,8 +252,39 @@ function App() {
         );
     };
 
-    const deleteToilet = (id) => {
-        setToilets(prevToilets => prevToilets.filter(toilet => toilet.id !== id));
+    const deleteToilet = async (id) => {
+        try {
+            const config = {
+                headers: {
+                    'Authorization': `${token}`,
+                    'Content-Type': 'application/json'
+                }
+            };
+
+            // 서버에 삭제 요청
+            const response = await axios.delete(`${baseUrl}/my/toilet/delete/${id}`, config);
+
+            if (response.status === 200) {
+                // 서버에서 삭제 성공 시 프론트엔드 상태에서도 해당 화장실 삭제
+                setToilets(prevToilets => prevToilets.filter(toilet => toilet.id !== id));
+                console.log('화장실이 성공적으로 삭제되었습니다.');
+
+                // 삭제 후 서버에서 최신 데이터를 다시 가져오기
+                const updatedResponse = await axios.get(`${baseUrl}/my/toilet/all`, config);
+                setToilets(updatedResponse.data.data);
+            } else {
+                console.error('화장실 삭제 실패:', response);
+            }
+        } catch (error) {
+            console.error('화장실 삭제 중 오류 발생:', error);
+            if (error.response) {
+                console.error('응답 데이터:', error.response.data);
+            } else if (error.request) {
+                console.error('요청이 전송되었지만 응답이 없음:', error.request);
+            } else {
+                console.error('요청 설정 중 오류 발생:', error.message);
+            }
+        }
     };
 
     const deleteSmoking = (id) => {
