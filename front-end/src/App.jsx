@@ -69,6 +69,36 @@ function App() {
     // }, []);
 
     useEffect(() => {
+        // 화장실 목록을 가져오는 함수
+        const fetchToilets = async () => {
+            try {
+                const config = {
+                    // 토큰을 Authorization 헤더에 포함
+                    headers: {
+                        'Authorization': `${token}`,
+                        'Content-Type': 'application/json' // 기본 Content-Type
+                    }
+                };
+                // GET 요청을 통해 화장실 목록 조회
+                const response = await axios.get(`${baseUrl}/my/toilet/all`, config);
+                // 서버로부터 받은 데이터를 상태로 설정
+                setToilets(response.data.data);
+            } catch (error) {
+                // 에러 발생 시 에러 상태 설정
+                console.error('Error fetching toilets:', error);
+                setError(error);
+            } finally {
+                // 로딩 상태 종료
+                setLoading(false);
+            }
+        };
+
+        if (token) {
+            fetchToilets();
+        }
+    }, [token]); // 빈 배열을 넣어 컴포넌트 마운트 시 한 번만 실행
+
+    useEffect(() => {
         const storedToken = localStorage.getItem('token');
         if (storedToken) {
             console.log("app.jsx - 로그인되어 있음.");
