@@ -115,7 +115,7 @@ function App() {
                     }
                 };
                 // GET 요청을 통해 흡연구역 목록 조회
-                const response = await axios.get(`${baseUrl}/my/smoking/all`, config);
+                const response = await axios.get(`${baseUrl}/my/smoke/all`, config);
                 // 서버로부터 받은 데이터를 상태로 설정
                 setSmokings(response.data.data);
             } catch (error) {
