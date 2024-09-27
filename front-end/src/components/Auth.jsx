@@ -65,7 +65,7 @@ import axios from 'axios';
 const Auth = ({ setUser, setToken, setIsAuthenticated }) => {
     const navigate = useNavigate();
     const endpoint = import.meta.env.VITE_BE_ENDPOINT;
-    const baseUrl = endpoint+'/oauth';
+    const baseUrl = `${endpoint}/oauth`;
 
     console.log("auth");
     useEffect(() => {
