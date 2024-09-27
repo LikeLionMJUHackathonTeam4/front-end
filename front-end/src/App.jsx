@@ -24,6 +24,8 @@ import initialToilets from './util/initialToilets';
 import initialSmokings from './util/initialSmokings';
 import LoginPage from './pages/LoginPage';
 import Auth from './components/Auth';
+import axios from 'axios';
+
 
 function App() {
     const [toilets, setToilets] = useState(initialToilets);
@@ -35,6 +37,9 @@ function App() {
     const [isKakaoLoaded, setIsKakaoLoaded] = useState(false);  // Kakao 지도 API 로드 상태
 
     const navigate = useNavigate();
+
+    const endpoint = import.meta.env.VITE_BE_ENDPOINT;
+    const baseUrl = `${endpoint}/api`;
 
     // const handleCallback = async () => {
     //     const urlParams = new URLSearchParams(window.location.search);
@@ -126,9 +131,40 @@ function App() {
         return <div>Loading Kakao Maps...</div>;
     }
 
-    const addToilet = (newToilet) => {
-        setToilets(prevToilets => [...prevToilets, newToilet]);
-        navigate('/myplace');
+    const addToilet = async (newToilet) => {
+        try {
+            const config = {
+                // 토큰을 Authorization 헤더에 포함
+                headers: {
+                    'Authorization': `${token}`,
+                    'Content-Type': 'application/json' // 기본 Content-Type
+                }
+            };
+
+            // axios POST 요청
+            const response = await axios.post(`${baseUrl}/my/toilet/save`, newToilet, config);
+
+            // 성공적으로 백엔드에 저장된 경우
+            console.log('Toilet saved successfully:', response.data);
+
+            // 상태 업데이트 및 페이지 이동
+            setToilets(prevToilets => [...prevToilets, newToilet]);
+            navigate('/myplace');
+        } catch (error) {
+            // 에러 처리
+            console.error('Error saving toilet:', error);
+            if (error.response) {
+                // 서버가 응답을 했지만, 요청이 성공하지 못한 경우
+                console.error('Response data:', error.response.data);
+                console.error('Response status:', error.response.status);
+            } else if (error.request) {
+                // 요청이 전송되었지만, 서버로부터 응답이 없는 경우
+                console.error('Request made but no response received:', error.request);
+            } else {
+                // 요청을 설정하는 중에 에러가 발생한 경우
+                console.error('Error in setting up request:', error.message);
+            }
+        }
     };
 
     const addSmoking = (newSmoking) => {
@@ -179,7 +215,7 @@ function App() {
                 <Route path='/review' element={<Review reviews={reviews} />} />
                 <Route path='/newreview' element={<NewReview addReview={addReview} />} />
                 <Route path='/editreview' element={<EditReview />} />
-                <Route path='/myplace' element={<MyPlace toilets={toilets} onDeleteToilet={deleteToilet} isAuthenticated={isAuthenticated} />} />
+                <Route path='/myplace' element={<MyPlace user={user} toilets={toilets} onDeleteToilet={deleteToilet} isAuthenticated={isAuthenticated} />} />
                 <Route path='/myplacesmoking' element={<MyPlaceSmoking smokings={smokings} onDeleteSmoking={deleteSmoking} isAuthenticated={isAuthenticated} />} />
                 <Route path='/selectmyplacetoilet' element={<SelectMyPlaceToilet isAuthenticated={isAuthenticated}/>} />
                 <Route path='/selectmyplacesmoking' element={<SelectMyPlaceSmoking isAuthenticated={isAuthenticated}/>} />

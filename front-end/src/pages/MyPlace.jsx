@@ -5,7 +5,7 @@ import Header from '../components/Header';
 import Modal from '../components/Modal';
 import { useNavigate } from 'react-router-dom';
 
-const MyPlace = ({ toilets, onDeleteToilet }) => {
+const MyPlace = ({ user, toilets, onDeleteToilet }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedToiletId, setSelectedToiletId] = useState(null);
     const navigate = useNavigate();
