@@ -96,7 +96,7 @@ function App() {
         if (token) {
             fetchToilets();
         }
-    }, [token]); // 빈 배열을 넣어 컴포넌트 마운트 시 한 번만 실행
+    }, [token]);
 
     useEffect(() => {
         const storedToken = localStorage.getItem('token');
