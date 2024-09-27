@@ -95,14 +95,8 @@ const MyPlaceSmoking = ({ smokings, onDeleteSmoking }) => {
                         <p>{smoking.location}</p>
                         <p>{smoking.detailedLocation}</p>
                         <div className='buttons'>
-                            <CustomButton 
-                                text='수정' 
-                                onClick={() => handleEditClick(smoking.id)} 
-                            />
-                            <CustomButton 
-                                text='삭제' 
-                                onClick={() => handleDeleteClick(smoking.id)} 
-                            />
+                            <CustomButton text='수정' onClick={() => handleEditClick(smoking.id)} />
+                            <CustomButton text='삭제' onClick={() => handleDeleteClick(smoking.id)} />
                         </div>
                     </div>
                 ))

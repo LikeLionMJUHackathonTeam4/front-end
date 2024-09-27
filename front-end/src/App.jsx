@@ -20,16 +20,16 @@ import MyPage from './pages/MyPage';
 import EditMyProfile from './pages/EditMyProfile';
 import MyReviewList from './pages/MyReviewList';
 import MyReviewListSmoking from './pages/MyReviewListSmoking';
-import initialToilets from './util/initialToilets';
-import initialSmokings from './util/initialSmokings';
+// import initialToilets from './util/initialToilets';
+// import initialSmokings from './util/initialSmokings';
 import LoginPage from './pages/LoginPage';
 import Auth from './components/Auth';
 import axios from 'axios';
 
 
 function App() {
-    const [toilets, setToilets] = useState(initialToilets);
-    const [smokings, setSmokings] = useState(initialSmokings);
+    const [toilets, setToilets] = useState([]);
+    const [smokings, setSmokings] = useState([]);
     const [user, setUser] = useState(null);
     const [token, setToken] = useState(localStorage.getItem('token'));
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -95,6 +95,36 @@ function App() {
 
         if (token) {
             fetchToilets();
+        }
+    }, [token]);
+
+    useEffect(() => {
+        // 흡연구역 목록을 가져오는 함수
+        const fetchSmokings = async () => {
+            try {
+                const config = {
+                    // 토큰을 Authorization 헤더에 포함
+                    headers: {
+                        'Authorization': `${token}`,
+                        'Content-Type': 'application/json' // 기본 Content-Type
+                    }
+                };
+                // GET 요청을 통해 흡연구역 목록 조회
+                const response = await axios.get(`${baseUrl}/my/smoking/all`, config);
+                // 서버로부터 받은 데이터를 상태로 설정
+                setSmokings(response.data.data);
+            } catch (error) {
+                // 에러 발생 시 에러 상태 설정
+                console.error('Error fetching smokings:', error);
+                setError(error);
+            } finally {
+                // 로딩 상태 종료
+                setLoading(false);
+            }
+        };
+
+        if (token) {
+            fetchSmokings();
         }
     }, [token]);
 
