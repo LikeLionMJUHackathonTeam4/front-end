@@ -85,3 +85,7 @@
 .nav-bar svg path {
     stroke-width: 2; /* 경로의 두께 조정 */
 }
+
+.noneSmoking {
+    margin: 0 auto; /* 중앙 정렬 */
+}

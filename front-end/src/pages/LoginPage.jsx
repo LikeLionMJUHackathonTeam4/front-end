@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import KakaoLoginButton from '../components/KakaoLoginButton'; // 카카오 로그인 버튼 컴포넌트
 import '../styles/LoginPage.css'
+import Icon from '../image/smoiletIcon.png';
 
 const LoginPage = () => {
     const navigate = useNavigate();
@@ -25,7 +26,8 @@ const LoginPage = () => {
 
     return (
         <div className="login-page">
-            <h2>해당 서비스를 이용하려면 로그인이 필요합니다.</h2>
+            <img className='smoiletIcon' src={Icon} />
+            <h2>로그인 후 흡변구역의 모든 서비스를 이용해 보세요!</h2>
             <KakaoLoginButton />
         </div>
     );

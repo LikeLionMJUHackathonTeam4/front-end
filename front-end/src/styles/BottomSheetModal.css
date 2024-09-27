@@ -1,25 +1,26 @@
 .bottom-sheet-modal {
     position: fixed;
-    bottom: -100%; /* 처음에는 화면 아래에 숨김 */
-    left: 0;
-    right: 0;
-    background-color: transparent;
-    border-radius: 15px 15px 0 0;
-    transition: bottom 0.3s ease-in-out; /* 스르륵 올라오도록 애니메이션 */
+    top: 50%; /* 수직 중앙 */
+    left: 50%; /* 수평 중앙 */
+    transform: translate(-50%, -50%); /* 요소의 크기만큼 이동하여 중앙 정렬 */
+    background-color: white; /* 배경 색상 추가 */
+    border-radius: 5px; /* 모달의 모서리 둥글게 */
+    transition: all 0.3s ease-in-out; /* 스르륵 올라오도록 애니메이션 */
     z-index: 1000; /* 지도보다 위에 있도록 z-index 추가 */
+    max-width: 380px; /* 원하는 너비 */
+    height: 200px; /* 원하는 높이 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 그림자 추가 */
 }
 
 .bottom-sheet-modal.open {
-    bottom: 0; /* 모달이 열리면 화면에 나타남 */
-    width: 100%;
-    height: 30%;
-    border: none;
-    box-shadow: none;
+    display: flex; /* 플렉스 박스로 변경 */
+    align-items: center; /* 수직 정렬 */
+    justify-content: center; /* 수평 정렬 */
 }
 
 .modal-content {
     text-align: center;
-    padding: 0px;
+    padding: 20px; /* 내부 여백 추가 */
 }
 
 .ModalButton {
