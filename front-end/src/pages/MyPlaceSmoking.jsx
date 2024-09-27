@@ -87,7 +87,7 @@ const MyPlaceSmoking = ({ smokings, onDeleteSmoking }) => {
             <hr className='bar'/>
 
             {smokings.length === 0 ? (
-                <p>저장된 흡연구역이 없습니다.</p>
+                <p className='noneSmoking' >저장된 흡연구역이 없습니다.</p>
             ) : (
                 smokings.map(smoking => (
                     <div key={smoking.id} className='place'>

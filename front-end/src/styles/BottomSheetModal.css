@@ -7,8 +7,8 @@
     border-radius: 5px; /* 모달의 모서리 둥글게 */
     transition: all 0.3s ease-in-out; /* 스르륵 올라오도록 애니메이션 */
     z-index: 1000; /* 지도보다 위에 있도록 z-index 추가 */
-    width: 55%; /* 원하는 너비 */
-    height: 30%; /* 원하는 높이 */
+    max-width: 380px; /* 원하는 너비 */
+    height: 200px; /* 원하는 높이 */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 그림자 추가 */
 }
 

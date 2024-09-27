@@ -78,7 +78,7 @@ const MyPlace = ({ user, toilets, onDeleteToilet }) => {
             <hr className='bar'/>
 
             {toilets.length === 0 ? (
-                <p>저장된 화장실이 없습니다.</p>
+                <p className='noneToilet'>저장된 화장실이 없습니다.</p>
             ) : (
                 toilets.map(toilet => (
                     <div key={toilet.id} className='place'>

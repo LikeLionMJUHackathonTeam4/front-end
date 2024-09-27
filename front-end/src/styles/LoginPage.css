@@ -14,12 +14,12 @@
 }
 
 .smoiletIcon {
-    width: 150px;
+    width: 140px;
 }
 
 /* 제목 스타일 */
 .login-page h2 {
-    font-size: 17px; /* 적당한 크기로 조정 */
+    font-size: 18px; /* 적당한 크기로 조정 */
     font-weight: bold;
     color: black;
     margin: 50px 0px; /* 제목과 버튼 간의 간격 조정 */
