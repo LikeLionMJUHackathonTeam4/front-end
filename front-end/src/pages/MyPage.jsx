@@ -24,8 +24,6 @@ const MyPage = ({ user, setUser, isAuthenticated, refreshToken, setToken, token 
 
     // Handle case where user is not found
     if (!user) {
-        console.log("not user");
-        console.log("refreshToken"+refreshToken);
         getUser();
         // return <div>User not found</div>;
     }
