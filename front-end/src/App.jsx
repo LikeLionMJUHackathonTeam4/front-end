@@ -36,15 +36,44 @@ function App() {
 
     const navigate = useNavigate();
 
-    // useEffect(() => {
-    //     const storedToken = localStorage.getItem('token');
-    //     if (storedToken) {
-    //         setToken(storedToken);
-    //         setIsAuthenticated(true);
-    //     } else {
-    //         setIsAuthenticated(false);
+    // const handleCallback = async () => {
+    //     const urlParams = new URLSearchParams(window.location.search);
+    //     const code = urlParams.get('code');
+    
+    //     if (code) {
+    //     try {
+    //         // 카카오 로그인 콜백 처리
+    //         const token = await kakaoLoginCallback(code);
+    //         localStorage.setItem('token', token); // JWT 대신 token으로 통일
+    //         setToken(token);
+            
+    //         // 사용자 정보 가져오기
+    //         const userData = await getUserInfo(token);
+    //         setUser(userData);
+    //         // setLoginStatus('Login successful!');
+    //         navigate('/'); // 로그인 후 메인 페이지로 리디렉션
+    //     } catch (error) {
+    //         console.error('Error during callback handling:', error);
+    //         // setLoginStatus(Login failed: ${error.response?.data?.message || 'Unknown error'});
     //     }
-    // }, [setToken]);    
+    //     }
+    // };
+    
+    // useEffect(() => {
+    //     handleCallback();
+    // }, []);
+
+    useEffect(() => {
+        const storedToken = localStorage.getItem('token');
+        if (storedToken) {
+            console.log("app.jsx - 로그인되어 있음.");
+            setToken(storedToken);
+            setIsAuthenticated(true);
+        } else {
+            console.log("app.jsx - 로그인되어 있지 않음.");
+            setIsAuthenticated(false);
+        }
+    }, [setToken]);    
 
     useEffect(() => {
         if (token) {
@@ -62,13 +91,13 @@ function App() {
         }
     }, []);
 
-    useEffect(() => {
-        if (user) {
-            localStorage.setItem('user', JSON.stringify(user));
-            setToken(localStorage.getItem('token'));
-            setIsAuthenticated(true);
-        }
-    }, [user]);
+    // useEffect(() => {
+    //     if (user) {
+    //         localStorage.setItem('user', JSON.stringify(user));
+    //         setToken(localStorage.getItem('token'));
+    //         setIsAuthenticated(true);
+    //     }
+    // }, [user]);
 
     useEffect(() => {
         // Kakao 지도 API 스크립트를 비동기로 로드
@@ -135,6 +164,7 @@ function App() {
         setReviews(prevReviews => [...prevReviews, newReview]);
     };
 
+    
     // if (!isAuthenticated) {
     //     return <OAuthTest setUser={setUser} setToken={setToken} />;
     // }
@@ -162,7 +192,7 @@ function App() {
                 <Route path='/myreviewlist' element={<MyReviewList isAuthenticated={isAuthenticated}/>} />
                 <Route path='/myreviewlistsmoking' element={<MyReviewListSmoking isAuthenticated={isAuthenticated}/>} />
                 <Route path='/login' element={<LoginPage />} />
-                <Route path='/auth' element={<Auth setUser={setUser} setToken={setToken} />} />
+                <Route path='/auth' element={<Auth setUser={setUser} setToken={setToken} setIsAuthenticated={setIsAuthenticated} />} />
             </Routes>
         </div>
     );

@@ -17,7 +17,7 @@ export const kakaoLoginCallback = async (code) => {
 
 export const getUserInfo = async (token) => {
   try {
-      const response = await axios.get('/api/user', { 
+      const response = await axios.get(`${baseUrl}/api/user`, { 
           headers: { Authorization: `Bearer ${token}` } 
       });
       return response.data;

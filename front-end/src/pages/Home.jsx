@@ -82,7 +82,7 @@ const Home = (isAuthenticated) => {
                 <MapSearch />
                 <TopButton fetchToiletData={fetchToiletData} showToiletMarkers={showToiletMarkers} setShowToiletMarkers={setShowToiletMarkers} />
             </div>
-            <Navbar isAuthenticated = {isAuthenticated} currentPath={location.pathname} updateLocation={updateLocation} />
+            <Navbar isAuthenticated = {isAuthenticated.isAuthenticated} currentPath={location.pathname} updateLocation={updateLocation} />
         </div>
     );
 };

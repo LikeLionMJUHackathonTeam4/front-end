@@ -6,13 +6,22 @@ import '../styles/LoginPage.css'
 const LoginPage = () => {
     const navigate = useNavigate();
 
-    useEffect(() => {
-        const token = localStorage.getItem('token');
-        if (token) {
-            // 이미 로그인 되어 있으면 리디렉션
-            navigate('/');
+    const handleLogin = async () => {
+        try {
+          const response = await axios.get('/oauth/login');  // 서버에서 리다이렉션 URL을 받아옴
+          window.location.href = response.data.data;  // 카카오 로그인 페이지로 이동
+        } catch (error) {
+          console.error('Error fetching Kakao login URL:', error);
         }
-    }, [navigate]);
+    };
+
+    // useEffect(() => {
+    //     const token = localStorage.getItem('token');
+    //     if (token) {
+    //         // 이미 로그인 되어 있으면 리디렉션
+    //         navigate('/');
+    //     }
+    // }, [navigate]);
 
     return (
         <div className="login-page">
