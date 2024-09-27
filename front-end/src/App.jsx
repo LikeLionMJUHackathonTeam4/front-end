@@ -304,7 +304,7 @@ function App() {
     return (
         <div className="app-container">
             <Routes>
-                <Route path='/' element={<Home isAuthenticated={isAuthenticated} refreshToken={refreshToken} setToken={setToken}/>} />
+                <Route path='/' element={<Home isAuthenticated={isAuthenticated} refreshToken={refreshToken} setToken={setToken} myToilets={toilets} mySmoke={smokings}/>} />
                 <Route path='/search' element={<Search />} />
                 <Route path='/info' element={<Info />} />
                 <Route path='/description' element={<Description />} />
