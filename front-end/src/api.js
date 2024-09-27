@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const endpoint = import.meta.env.VITE_BE_ENDPOINT;
-const baseUrl = endpoint+'/oauth';
+const baseUrl = `${endpoint}/oauth`;
 
 export const getKakaoLoginUrl = async () => {
   const response = await axios.get(`${baseUrl}/login`);
