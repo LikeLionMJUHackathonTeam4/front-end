@@ -11,7 +11,7 @@
     position: relative; /* button을 input 위에 배치하기 위해 부모에 relative 설정 */
     width: 90%;
     max-width: 500px; /* 최대 너비 설정 */
-    margin-top: 80px;
+    margin-top: 0px;
 }
 
 .SearchBox {
