@@ -263,7 +263,7 @@ function App() {
             };
 
             // 서버에 삭제 요청
-            const response = await axios.delete(`${baseUrl}/my/toilet/delete/${id}`, config);
+            const response = await axios.delete(`${baseUrl}/my/toilet/${id}`, config);
 
             if (response.status === 200) {
                 // 서버에서 삭제 성공 시 프론트엔드 상태에서도 해당 화장실 삭제
