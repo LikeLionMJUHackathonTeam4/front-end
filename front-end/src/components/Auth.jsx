@@ -85,7 +85,6 @@ const Auth = ({ setUser, setToken, setIsAuthenticated }) => {
                     const userResponse = await axios.get(`${baseUrl}/user`, {
                         headers: { Authorization: `Bearer ${token}` },
                     });
-                    console.log(userResponse.data);
                     setUser(userResponse.data.data);
                     setIsAuthenticated(true);
                     navigate('/');  // 홈 페이지로 리다이렉트
