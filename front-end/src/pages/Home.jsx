@@ -15,7 +15,9 @@ const Home = (isAuthenticated, refreshToken, setToken) => {
     const location = useLocation();
     const mapRef = useRef();
     const [toilets, setToilets] = useState(["서울 중구 정동 5-8"]); // 화장실 데이터 상태
+    const [smoke, setSmoke] = useState([]); // 흡연구역 데이터 상태
     const [showToiletMarkers, setShowToiletMarkers] = useState(false); // 마커 표시 여부
+    const [showSmokeMarkers, setShowSmokeMarkers] = useState(false);
     const [selectedToilet, setSelectedToilet] = useState(null); // 선택된 화장실 데이터
     const [isModalOpen, setIsModalOpen] = useState(false); // 모달 열림 상태 관리
 
@@ -37,6 +39,24 @@ const Home = (isAuthenticated, refreshToken, setToken) => {
         }
     };
 
+    //흡연구역 데이터 가져오기 함수
+    const fetchToSmokeData = async() => {
+        try {
+            const response = await axios.get(`${baseUrl}/smoke/all`);
+            if (response.data && response.data.code === 200) {
+                console.log('흡연구역 데이터:', response.data.data);
+                setSmoke(response.data.data); // 흡연구역 데이터 상태 업데이트
+                if (mapRef.current && showSmokeMarkers) {
+                    mapRef.current.addMarkers(response.data.data); // 흡연구역 마커 추가
+                }
+            } else {
+                console.error('흡연구역 데이터를 가져오는 데 실패했습니다.');
+            }
+        } catch (error) {
+            console.error('흡연구역 데이터를 가져오는 중 오류 발생:', error);
+        }
+    };
+
     // 내 장소에 저장된 화장실 데이터 가져오기 함수
     const fetchMyPlaceToilets = async () => {
         try {
@@ -52,6 +72,24 @@ const Home = (isAuthenticated, refreshToken, setToken) => {
             }
         } catch (error) {
             console.error('내 장소 화장실 데이터를 가져오는 중 오류 발생:', error);
+        }
+    };
+
+    // 내 장소에 저장된 흡연구역 데이터 가져오기 함수
+    const fetchMyPlaceSmoke = async () => {
+        try {
+            const response = await axios.get(`${baseUrl}/my/smoke/all`); // 내 장소 흡연구역 API 경로
+            if (response.data && response.data.code === 200) {
+                // 이전 흡연구역 목록과 합치기
+                setSmoke((prevSmoke) => [...prevSmoke, ...response.data.data]);
+                if (mapRef.current && showSmokeMarkers) {
+                    mapRef.current.addMarkers(response.data.data); // 내 장소 흡연구역 마커 추가
+                }
+            } else {
+                console.error('저장된 흡연구역 데이터를 가져오는 데 실패했습니다.');
+            }
+        } catch (error) {
+            console.error('내 장소 흡연구역 데이터를 가져오는 중 오류 발생:', error);
         }
     };
 
@@ -79,6 +117,17 @@ const Home = (isAuthenticated, refreshToken, setToken) => {
         }
     }, [showToiletMarkers]); // showToiletMarkers가 변경될 때마다 실행
 
+    useEffect(() => {
+        if (showSmokeMarkers) {
+            fetchToSmokeData(); // 흡연구역 데이터 가져오기
+            fetchMyPlaceSmoke(); // 내 장소 흡연구역 데이터 가져오기
+        } else {
+            if (mapRef.current) {
+                mapRef.current.addMarkers([]);
+            }
+        }
+    }, [showSmokeMarkers]); // showSmokeMarkers가 변경될 때마다 실행
+
     // 위치 재검색 함수
     const updateLocation = () => {
         if (mapRef.current) {
@@ -89,9 +138,13 @@ const Home = (isAuthenticated, refreshToken, setToken) => {
     return (
         <div className='Home'>
             <div className="map-wrapper">
-                <Map ref={mapRef} toilets={toilets} onMarkerClick={handleMarkerClick} /> {/* ref로 Map 컴포넌트에 접근 */}
+                <Map ref={mapRef} toilets={toilets} smoke={smoke} onMarkerClick={handleMarkerClick} /> {/* ref로 Map 컴포넌트에 접근 */}
                 <MapSearch mapRef={mapRef} />
-                <TopButton fetchToiletData={fetchToiletData} showToiletMarkers={showToiletMarkers} setShowToiletMarkers={setShowToiletMarkers} />
+                <TopButton
+                    fetchToiletData={fetchToiletData} fetchToSmokeData={fetchToSmokeData}
+                    showToiletMarkers={showToiletMarkers} showSmokeMarkers={showSmokeMarkers}
+                    setShowToiletMarkers={setShowToiletMarkers} setShowSmokeMarkers={setShowSmokeMarkers}
+                />
             </div>
 
             <Navbar isAuthenticated = {isAuthenticated.isAuthenticated} currentPath={location.pathname} updateLocation={updateLocation} refreshToken={refreshToken} setToken={setToken}/>

@@ -1,9 +1,10 @@
 import React, { useEffect, useState, useImperativeHandle, forwardRef } from "react";
 import toiletPointIcon from '../image/toiletPoint.svg';
 import myToiletIcon from "../image/myToilet.svg";
+import smokePointIcon from '../image/smokingPoint.svg';
 
 const Map = forwardRef((props, ref) => {
-  const { toilets } = props;
+  const { toilets, smoke } = props;
   const [location, setLocation] = useState({ lat: 37.5665, lng: 126.9780 }); // 기본 위치 (서울)
   const [map, setMap] = useState(null);
   const [markers, setMarkers] = useState([]); // 마커 상태 관리
@@ -33,13 +34,15 @@ const Map = forwardRef((props, ref) => {
         console.error("이 브라우저는 Geolocation을 지원하지 않습니다.");
       }
     },
-    addMarkers(toilets) {
+
+    addMarkers(toilets, smoke) {
       // 기존 마커 제거
       markers.forEach(marker => marker.setMap(null));
 
-      if (toilets.length > 0) {
-        const geocoder = new window.kakao.maps.services.Geocoder();  // Geocoder 객체 생성
+      const geocoder = new window.kakao.maps.services.Geocoder();  // Geocoder 객체 생성
 
+      // 화장실 마커 추가
+      if (toilets.length > 0) {
         const newMarkers = toilets.map(toilet => {
           const markerPosition = new window.kakao.maps.LatLng(toilet.wsg84y, toilet.wsg84x);
           
@@ -81,6 +84,53 @@ const Map = forwardRef((props, ref) => {
         setMarkers(newMarkers); // 새로운 마커 상태 업데이트
       } else {
         setMarkers([]); // 마커가 비어있을 때 상태 초기화
+      }
+
+      if (smoke.length > 0) {
+        const geocoder = new window.kakao.maps.services.Geocoder();  // Geocoder 객체 생성
+
+        const newMarkers = smoke.map(smoking => {
+          const markerPosition = new window.kakao.maps.LatLng(smoking.wsg84y, smoking.wsg84x);
+          
+          // 원하는 마커 이미지 설정
+          const imageSrc = smoking.isMyPlace ? myToiletIcon : smokePointIcon;
+          const imageSize = new window.kakao.maps.Size(35, 35);
+          const imageOption = { offset: new window.kakao.maps.Point(17.5, 17.5) };
+          const markerImage = new window.kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
+
+          const marker = new window.kakao.maps.Marker({
+            position: markerPosition,
+            map: map,
+            title: smoking.name, // 마커에 화장실 이름 추가
+            image: markerImage // 마커 이미지 추가
+          });
+
+          window.kakao.maps.event.addListener(marker, 'click', () => {
+            geocoder.coord2Address(smoking.wsg84x, smoking.wsg84y, (result, status) => {
+              if (status === window.kakao.maps.services.Status.OK) {
+                const address = result[0].road_address
+                  ? result[0].road_address.address_name
+                  : result[0].address.address_name;
+                
+                // 마커 클릭 시 주소 정보를 함께 전달
+                const smokeWithAddress = { ...smoking, address };
+                props.onMarkerClick(smokeWithAddress);
+              } else {
+                console.error("주소 변환 실패");
+              }
+            });
+            if (props.onMarkerClick) {
+              props.onMarkerClick(smoking); // 마커 클릭 시 화장실 정보를 전달
+            }
+          });
+
+          return marker;
+        });
+
+        setMarkers(newMarkers); // 새로운 마커 상태 업데이트
+      } else {
+        setMarkers([]); // 마커가 비어있을 때 상태 초기화
+      }
       }
     },
     searchPlace(keyword) {
