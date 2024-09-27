@@ -6,6 +6,7 @@ import TopButton from '../components/TopButton';
 import Navbar from '../components/Navbar';
 import Map from '../components/Map';
 import axios from 'axios';
+import BottomSheetModal from '../components/BottomSheetModal';  // 바텀시트 모달 컴포넌트 임포트
 
 const Home = () => {
     const endpoint = import.meta.env.VITE_BE_ENDPOINT;
@@ -15,6 +16,8 @@ const Home = () => {
     const mapRef = useRef();
     const [toilets, setToilets] = useState([]);
     const [showToiletMarkers, setShowToiletMarkers] = useState(false); // 마커 표시 여부
+    const [selectedToilet, setSelectedToilet] = useState(null);  // 선택된 화장실 데이터
+    const [isModalOpen, setIsModalOpen] = useState(false);  // 모달 열림 상태 관리
 
     // 화장실 데이터 불러오기 함수
     const fetchToiletData = async () => {
@@ -40,6 +43,17 @@ const Home = () => {
         } catch (error) {
             console.error('화장실 데이터를 가져오는 중 오류 발생:', error);
         }
+    };
+
+    // 마커 클릭 시 바텀시트 모달 띄우기
+    const handleMarkerClick = (toilet) => {
+        console.log('선택된 화장실:', toilet);  // 선택된 화장실 정보 확인
+        setSelectedToilet(toilet);
+        setIsModalOpen(true);  // 모달 열기
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);  // 모달 닫기
     };
 
     // useEffect(() => {
@@ -71,18 +85,21 @@ const Home = () => {
     // 위치 재검색 함수
     const updateLocation = () => {
         if (mapRef.current) {
-        mapRef.current.updateLocation();  // Map 컴포넌트의 updateLocation 함수 호출
+            mapRef.current.updateLocation();  // Map 컴포넌트의 updateLocation 함수 호출
         }
     };
 
     return (
         <div className='Home'>
             <div className="map-wrapper">
-                <Map ref={mapRef} toilets={toilets} />  {/* ref로 Map 컴포넌트에 접근 */}
-                <MapSearch />
+                <Map ref={mapRef} toilets={toilets} onMarkerClick={handleMarkerClick} />  {/* ref로 Map 컴포넌트에 접근 */}
+                <MapSearch mapRef={mapRef} />
                 <TopButton fetchToiletData={fetchToiletData} showToiletMarkers={showToiletMarkers} setShowToiletMarkers={setShowToiletMarkers} />
             </div>
             <Navbar currentPath={location.pathname} updateLocation={updateLocation} />
+
+            {/* 바텀시트 모달 */}
+            <BottomSheetModal toilet={selectedToilet} isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
         </div>
     );
 };
