@@ -32,6 +32,7 @@ function App() {
     const [smokings, setSmokings] = useState(initialSmokings);
     const [user, setUser] = useState(null);
     const [token, setToken] = useState(localStorage.getItem('token'));
+    const [refreshToken, setRefreshToken] = useState(localStorage.getItem('refreshToken'));
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [reviews, setReviews] = useState([]);
     const [isKakaoLoaded, setIsKakaoLoaded] = useState(false);  // Kakao 지도 API 로드 상태
@@ -258,7 +259,7 @@ function App() {
                 <Route path='/myreviewlist' element={<MyReviewList isAuthenticated={isAuthenticated}/>} />
                 <Route path='/myreviewlistsmoking' element={<MyReviewListSmoking isAuthenticated={isAuthenticated}/>} />
                 <Route path='/login' element={<LoginPage />} />
-                <Route path='/auth' element={<Auth setUser={setUser} setToken={setToken} setIsAuthenticated={setIsAuthenticated} />} />
+                <Route path='/auth' element={<Auth setUser={setUser} setToken={setToken} setRefreshToken={setRefreshToken} setIsAuthenticated={setIsAuthenticated} />} />
             </Routes>
         </div>
     );

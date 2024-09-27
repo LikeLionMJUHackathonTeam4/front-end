@@ -62,7 +62,7 @@ import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-const Auth = ({ setUser, setToken, setIsAuthenticated }) => {
+const Auth = ({ setUser, setToken, setRefreshToken, setIsAuthenticated }) => {
     const navigate = useNavigate();
     const endpoint = import.meta.env.VITE_BE_ENDPOINT;
     const baseUrl = `${endpoint}/oauth`;
@@ -78,9 +78,27 @@ const Auth = ({ setUser, setToken, setIsAuthenticated }) => {
                     console.log(code);
                     const response = await axios.get(`${baseUrl}/callback?code=${code}`);
                     const token = response.data.data;
-                    console.log(token);
+                    console.log("token : "+ token);
                     localStorage.setItem('token', token);  // JWT 토큰을 로컬 스토리지에 저장
                     setToken(token);
+
+
+                    // const config = {
+                    //     // 토큰을 Authorization 헤더에 포함
+                    //     headers: {
+                    //         'Authorization': `${token}`,
+                    //         'Content-Type': 'application/json' // 기본 Content-Type
+                    //     }
+                    // };
+
+                    const refreshResponse = await axios.get(`${baseUrl}/refreshToken`, {
+                        headers: { Authorization: `Bearer ${token}` },
+                    });
+                    console.log(refreshResponse);
+                    const refreshToken = refreshResponse.data.data;
+                    console.log("refreshToken : "+refreshToken);
+                    localStorage.setItem('refreshToken', refreshToken);  // JWT refreshToken을 로컬 스토리지에 저장
+                    setRefreshToken(refreshToken);
 
                     // 토큰으로 사용자 정보 가져오기
                     const userResponse = await axios.get(`${baseUrl}/user`, {
