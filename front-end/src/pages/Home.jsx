@@ -8,7 +8,7 @@ import Map from '../components/Map';
 import axios from 'axios';
 import BottomSheetModal from '../components/BottomSheetModal';  // 바텀시트 모달 컴포넌트 임포트
 
-const Home = (isAuthenticated) => {
+const Home = (isAuthenticated, refreshToken, setToken) => {
     const endpoint = import.meta.env.VITE_BE_ENDPOINT;
     const baseUrl = endpoint+'/api';
 
@@ -97,7 +97,7 @@ const Home = (isAuthenticated) => {
                 <TopButton fetchToiletData={fetchToiletData} showToiletMarkers={showToiletMarkers} setShowToiletMarkers={setShowToiletMarkers} />
             </div>
 
-            <Navbar isAuthenticated = {isAuthenticated.isAuthenticated} currentPath={location.pathname} updateLocation={updateLocation} />
+            <Navbar isAuthenticated = {isAuthenticated.isAuthenticated} currentPath={location.pathname} updateLocation={updateLocation} refreshToken={refreshToken} setToken={setToken}/>
             {/* 바텀시트 모달 */}
             <BottomSheetModal toilet={selectedToilet} isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
         </div>

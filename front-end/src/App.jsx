@@ -32,9 +32,12 @@ function App() {
     const [smokings, setSmokings] = useState([]);
     const [user, setUser] = useState(null);
     const [token, setToken] = useState(localStorage.getItem('token'));
+    const [refreshToken, setRefreshToken] = useState(localStorage.getItem('refreshToken'));
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [reviews, setReviews] = useState([]);
     const [isKakaoLoaded, setIsKakaoLoaded] = useState(false);  // Kakao 지도 API 로드 상태
+    const [loading, setLoading] = useState(false); // 로딩 상태 추가
+    const [error, setError] = useState(null); // 에러 상태 추가
 
     const navigate = useNavigate();
 
@@ -71,6 +74,7 @@ function App() {
     useEffect(() => {
         // 화장실 목록을 가져오는 함수
         const fetchToilets = async () => {
+            setLoading(true); // 로딩 상태 시작
             try {
                 const config = {
                     // 토큰을 Authorization 헤더에 포함
@@ -268,7 +272,7 @@ function App() {
     return (
         <div className="app-container">
             <Routes>
-                <Route path='/' element={<Home isAuthenticated={isAuthenticated}/>} />
+                <Route path='/' element={<Home isAuthenticated={isAuthenticated} refreshToken={refreshToken} setToken={setToken}/>} />
                 <Route path='/search' element={<Search />} />
                 <Route path='/info' element={<Info />} />
                 <Route path='/description' element={<Description />} />
@@ -283,12 +287,12 @@ function App() {
                 <Route path='/newmyplacesmoking' element={<NewMyPlaceSmoking addSmoking={addSmoking} isAuthenticated={isAuthenticated}/>} />
                 <Route path='/editmyplacetoilet/:id' element={<EditMyPlaceToilet toilets={toilets} onUpdateToilet={updateToilet} isAuthenticated={isAuthenticated}/>} />
                 <Route path='/editmyplacesmoking/:id' element={<EditMyPlaceSmoking smokings={smokings} onUpdateSmoking={updateSmoking} isAuthenticated={isAuthenticated}/>} />
-                <Route path='/mypage' element={<MyPage user={user} isAuthenticated={isAuthenticated}/>} />
+                <Route path='/mypage' element={<MyPage user={user} setUser={setUser} isAuthenticated={isAuthenticated} refreshToken={refreshToken} setToken={setToken} token={token}/>} />
                 <Route path='/editmyprofile' element={<EditMyProfile user={user} setUser={setUser} token={token} setToken={setToken} isAuthenticated={isAuthenticated}/>} />
                 <Route path='/myreviewlist' element={<MyReviewList isAuthenticated={isAuthenticated}/>} />
                 <Route path='/myreviewlistsmoking' element={<MyReviewListSmoking isAuthenticated={isAuthenticated}/>} />
                 <Route path='/login' element={<LoginPage />} />
-                <Route path='/auth' element={<Auth setUser={setUser} setToken={setToken} setIsAuthenticated={setIsAuthenticated} />} />
+                <Route path='/auth' element={<Auth setUser={setUser} setToken={setToken} setRefreshToken={setRefreshToken} setIsAuthenticated={setIsAuthenticated} />} />
             </Routes>
         </div>
     );
