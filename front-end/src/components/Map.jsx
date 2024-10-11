@@ -179,6 +179,16 @@ const Map = forwardRef((props, ref) => {
             if (map) {
               const moveLatLon = new window.kakao.maps.LatLng(newLocation.lat, newLocation.lng);
               map.setCenter(moveLatLon);  // 지도 중심을 새로운 위치로 이동
+              const marker = new window.kakao.maps.Marker({
+                position: moveLatLon,
+                map: map,
+                title: '현재 위치'
+                // ,
+                // image: new window.kakao.maps.MarkerImage(
+                //   "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png",
+                //   new window.kakao.maps.Size(24, 35)
+                // ) // 마커 이미지 추가 (스타일 지정 가능)
+              });
             }
           },
           (err) => {
@@ -190,56 +200,12 @@ const Map = forwardRef((props, ref) => {
       }
     },
 
+    // 마커 추가 함수
     addMarkers(toilets) {
-      // 기존 마커 제거
-      markers.forEach(marker => marker.setMap(null));
-
-      if (toilets.length > 0) {
-        const geocoder = new window.kakao.maps.services.Geocoder();  // Geocoder 객체 생성
-
-        const newMarkers = toilets.map(toilet => {
-          const markerPosition = new window.kakao.maps.LatLng(toilet.wsg84y, toilet.wsg84x);
-          
-          // 원하는 마커 이미지 설정
-          const imageSrc = toilet.isMyPlace ? myToiletIcon : toiletPointIcon;
-          const imageSize = new window.kakao.maps.Size(35, 35);
-          const imageOption = { offset: new window.kakao.maps.Point(17.5, 17.5) };
-          const markerImage = new window.kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
-
-          const marker = new window.kakao.maps.Marker({
-            position: markerPosition,
-            map: map,
-            title: toilet.name, // 마커에 화장실 이름 추가
-            image: markerImage // 마커 이미지 추가
-          });
-
-          window.kakao.maps.event.addListener(marker, 'click', () => {
-            geocoder.coord2Address(toilet.wsg84x, toilet.wsg84y, (result, status) => {
-              if (status === window.kakao.maps.services.Status.OK) {
-                const address = result[0].road_address
-                  ? result[0].road_address.address_name
-                  : result[0].address.address_name;
-                
-                // 마커 클릭 시 주소 정보를 함께 전달
-                const toiletWithAddress = { ...toilet, address };
-                props.onMarkerClick(toiletWithAddress);
-              } else {
-                console.error("주소 변환 실패");
-              }
-            });
-            if (props.onMarkerClick) {
-              props.onMarkerClick(toilet); // 마커 클릭 시 화장실 정보를 전달
-            }
-          });
-
-          return marker;
-        });
-
-        setMarkers(newMarkers); // 새로운 마커 상태 업데이트
-      } else {
-        setMarkers([]); // 마커가 비어있을 때 상태 초기화
-      }
+      // 외부에서 호출할 수 있도록 addMarkers를 포함
+      addMarkers(toilets);
     },
+    
     searchPlace(keyword) {
       // 장소 검색
       if (placesService) {
@@ -272,6 +238,63 @@ const Map = forwardRef((props, ref) => {
       }
     }
   }));
+  // 마커 추가 함수
+  const addMarkers = (toilets) => {
+
+    // toilets가 배열인지 확인
+    if (!Array.isArray(toilets) || toilets.length === 0) {
+      console.error('Invalid toilets data or empty array.');
+      return;
+    }
+    // 기존 마커 제거
+    markers.forEach(marker => marker.setMap(null));
+
+    if (toilets.length > 0) {
+      const geocoder = new window.kakao.maps.services.Geocoder();  // Geocoder 객체 생성
+
+      const newMarkers = toilets.map(toilet => {
+        const markerPosition = new window.kakao.maps.LatLng(toilet.wsg84y, toilet.wsg84x);
+        
+        // 원하는 마커 이미지 설정
+        const imageSrc = toilet.isMyPlace ? myToiletIcon : toiletPointIcon;
+        const imageSize = new window.kakao.maps.Size(35, 35);
+        const imageOption = { offset: new window.kakao.maps.Point(17.5, 17.5) };
+        const markerImage = new window.kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
+
+        const marker = new window.kakao.maps.Marker({
+          position: markerPosition,
+          map: map,
+          title: toilet.name, // 마커에 화장실 이름 추가
+          image: markerImage // 마커 이미지 추가
+        });
+
+        window.kakao.maps.event.addListener(marker, 'click', () => {
+          geocoder.coord2Address(toilet.wsg84x, toilet.wsg84y, (result, status) => {
+            if (status === window.kakao.maps.services.Status.OK) {
+              const address = result[0].road_address
+                ? result[0].road_address.address_name
+                : result[0].address.address_name;
+              
+              // 마커 클릭 시 주소 정보를 함께 전달
+              const toiletWithAddress = { ...toilet, address };
+              props.onMarkerClick(toiletWithAddress);
+            } else {
+              console.error("주소 변환 실패");
+            }
+          });
+          if (props.onMarkerClick) {
+            props.onMarkerClick(toilet); // 마커 클릭 시 화장실 정보를 전달
+          }
+        });
+
+        return marker;
+      });
+
+      setMarkers(newMarkers); // 새로운 마커 상태 업데이트
+    } else {
+      setMarkers([]); // 마커가 비어있을 때 상태 초기화
+    }
+  };
 
   // 사용자가 지도를 드래그하거나 터치할 때 추적을 중지
   useEffect(() => {
@@ -290,30 +313,67 @@ const Map = forwardRef((props, ref) => {
   }, [map, isTracking, stopTracking]);
 
   useEffect(() => {
+    if (map && Array.isArray(toilets) && toilets.length > 0) {
+      addMarkers(toilets); // toilets가 유효할 때만 마커 추가
+    }
+  }, [toilets, map]);
+
+  // useEffect(() => {
+  //   if (window.kakao && window.kakao.maps && location) {
+  //     const container = document.getElementById("mapContainer");
+  //     const options = {
+  //       center: new window.kakao.maps.LatLng(location.lat, location.lng),
+  //       level: 3,
+  //     };
+
+  //     const mapInstance = new window.kakao.maps.Map(container, options);
+  //     setMap(mapInstance);
+
+  //     // 카카오맵 Place 서비스 객체 생성
+  //     const places = new window.kakao.maps.services.Places();
+  //     setPlacesService(places);
+
+  //     // 현재 위치에 마커 표시
+  //     new window.kakao.maps.Marker({
+  //       position: new window.kakao.maps.LatLng(location.lat, location.lng),
+  //       map: mapInstance,
+  //     });
+  //   }
+  // }, [location]);
+
+  useEffect(() => {
     if (window.kakao && window.kakao.maps && location) {
       const container = document.getElementById("mapContainer");
-      const options = {
-        center: new window.kakao.maps.LatLng(location.lat, location.lng),
-        level: 3,
-      };
-
-      const mapInstance = new window.kakao.maps.Map(container, options);
-      setMap(mapInstance);
-
-      // 카카오맵 Place 서비스 객체 생성
-      const places = new window.kakao.maps.services.Places();
-      setPlacesService(places);
-
-      // 현재 위치에 마커 표시
-      new window.kakao.maps.Marker({
-        position: new window.kakao.maps.LatLng(location.lat, location.lng),
-        map: mapInstance,
-      });
+      
+      // 이미 지도 인스턴스가 생성되었는지 확인
+      if (!map) {
+        const options = {
+          center: new window.kakao.maps.LatLng(location.lat, location.lng),
+          level: 3,
+        };
+        const mapInstance = new window.kakao.maps.Map(container, options);
+        setMap(mapInstance);
+  
+        // 카카오맵 Place 서비스 객체 생성
+        const places = new window.kakao.maps.services.Places();
+        setPlacesService(places);
+  
+        // 현재 위치에 마커 표시
+        new window.kakao.maps.Marker({
+          position: new window.kakao.maps.LatLng(location.lat, location.lng),
+          map: mapInstance,
+        });
+      } else {
+        // 지도 인스턴스가 이미 있을 경우 위치만 업데이트
+        const moveLatLon = new window.kakao.maps.LatLng(location.lat, location.lng);
+        map.setCenter(moveLatLon);
+        addMarkers(toilets); // 위치가 업데이트될 때 마커 추가
+      }
     }
-  }, [location]);
+  }, [location, map, toilets]);
 
   return (
-    <div id="mapContainer" style={{ width: "100%", height: "100vh", position: "relative" }}></div>
+    <div id="mapContainer" style={{ width: "100%", height: "100vh" }}></div>
   );
 });
 
