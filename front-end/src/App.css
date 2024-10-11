@@ -1,11 +1,10 @@
-/* body, html, .app-container {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-}
 
-.app-container {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-} */
+@media screen and (orientation: landscape) {
+    body {
+      transform: rotate(90deg); /* 90도 회전 */
+      transform-origin: center;  /* 중앙을 기준으로 회전 */
+      width: 100vh;              /* 가로를 세로처럼 */
+      height: 100vw;             /* 세로를 가로처럼 */
+      overflow: hidden;          /* 넘치는 내용 숨김 */
+    }
+  }
