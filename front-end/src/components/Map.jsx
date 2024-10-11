@@ -351,28 +351,13 @@ const Map = forwardRef((props, ref) => {
     }
   }, [toilets, map]);
 
-  // useEffect(() => {
-  //   if (window.kakao && window.kakao.maps && location) {
-  //     const container = document.getElementById("mapContainer");
-  //     const options = {
-  //       center: new window.kakao.maps.LatLng(location.lat, location.lng),
-  //       level: 3,
-  //     };
-
-  //     const mapInstance = new window.kakao.maps.Map(container, options);
-  //     setMap(mapInstance);
-
-  //     // 카카오맵 Place 서비스 객체 생성
-  //     const places = new window.kakao.maps.services.Places();
-  //     setPlacesService(places);
-
-  //     // 현재 위치에 마커 표시
-  //     new window.kakao.maps.Marker({
-  //       position: new window.kakao.maps.LatLng(location.lat, location.lng),
-  //       map: mapInstance,
-  //     });
-  //   }
-  // }, [location]);
+  // currentLocationMarker가 설정된 후 다시 위치를 업데이트
+  useEffect(() => {
+    if (currentLocationMarker) {
+      // console.log("b");  // 상태가 업데이트되면 항상 "b" 출력
+      currentLocationMarker.setPosition(new window.kakao.maps.LatLng(location.lat, location.lng));
+    }
+  }, [currentLocationMarker, location]);
 
   useEffect(() => {
     if (window.kakao && window.kakao.maps && location) {
