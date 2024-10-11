@@ -164,6 +164,7 @@ const Map = forwardRef((props, ref) => {
   const [map, setMap] = useState(null);
   const [markers, setMarkers] = useState([]); // 마커 상태 관리
   const [placesService, setPlacesService] = useState(null);
+  const [currentLocationMarker, setCurrentLocationMarker] = useState(null); // 현위치 마커 상태
 
   useImperativeHandle(ref, () => ({
     updateLocation() {
@@ -178,19 +179,31 @@ const Map = forwardRef((props, ref) => {
               lng: position.coords.longitude,
             };
             setLocation(newLocation);
+            
             if (map) {
               const moveLatLon = new window.kakao.maps.LatLng(newLocation.lat, newLocation.lng);
               map.setCenter(moveLatLon);  // 지도 중심을 새로운 위치로 이동
-              const marker = new window.kakao.maps.Marker({
-                position: moveLatLon,
-                map: map,
-                title: '현재 위치'
-                // ,
-                // image: new window.kakao.maps.MarkerImage(
-                //   "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png",
-                //   new window.kakao.maps.Size(24, 35)
-                // ) // 마커 이미지 추가 (스타일 지정 가능)
-              });
+              // 현위치 마커가 이미 있는 경우 위치 업데이트, 없는 경우 새로 생성
+              if (currentLocationMarker) {
+                currentLocationMarker.setPosition(moveLatLon); // 기존 마커 위치 업데이트
+              } else {
+                const marker = new window.kakao.maps.Marker({
+                  position: moveLatLon,
+                  map: map,
+                  title: '현재 위치'
+                });
+                setCurrentLocationMarker(marker); // 새 마커 생성 후 상태 업데이트
+              }
+              // const marker = new window.kakao.maps.Marker({
+              //   position: moveLatLon,
+              //   map: map,
+              //   title: '현재 위치'
+              //   // ,
+              //   // image: new window.kakao.maps.MarkerImage(
+              //   //   "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png",
+              //   //   new window.kakao.maps.Size(24, 35)
+              //   // ) // 마커 이미지 추가 (스타일 지정 가능)
+              // });
             }
           },
           (err) => {
