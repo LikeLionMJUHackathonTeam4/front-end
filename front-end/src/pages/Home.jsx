@@ -21,6 +21,8 @@ const Home = (isAuthenticated, refreshToken, setToken, myToilet, mySmoke) => {
     const [selectedToilet, setSelectedToilet] = useState(null); // 선택된 화장실 데이터
     const [isModalOpen, setIsModalOpen] = useState(false); // 모달 열림 상태 관리
 
+    const [isTracking, setIsTracking] = useState(false); // 추적 상태 관리
+
 
 
     // 공공 화장실 데이터 가져오기 함수
@@ -133,14 +135,31 @@ const Home = (isAuthenticated, refreshToken, setToken, myToilet, mySmoke) => {
     // 위치 재검색 함수
     const updateLocation = () => {
         if (mapRef.current) {
-            mapRef.current.updateLocation(); // Map 컴포넌트의 updateLocation 함수 호출
+            mapRef.current.updateLocation(); // Map 컴포넌트의 updateLocation 호출
+            setIsTracking(true); // 위치 추적 시작
         }
     };
+
+    const stopTracking = () => {
+        setIsTracking(false); // 위치 추적 중지
+    };
+
+    // 사용자가 지도를 이동할 때 추적을 중지하는 함수
+    // const handleMapDrag = () => {
+    //     if (isTracking) {
+    //         const watchId = localStorage.getItem('watchId');
+    //         if (watchId) {
+    //             navigator.geolocation.clearWatch(watchId); // 추적 중지
+    //             localStorage.removeItem('watchId');
+    //         }
+    //         setIsTracking(false);
+    //     }
+    // };
 
     return (
         <div className='Home'>
             <div className="map-wrapper">
-                <Map ref={mapRef} toilets={toilets} smoke={smoke} onMarkerClick={handleMarkerClick}/> {/* ref로 Map 컴포넌트에 접근 */}
+                <Map ref={mapRef} toilets={toilets} smoke={smoke} isTracking={isTracking} stopTracking={stopTracking} onMarkerClick={handleMarkerClick} /> {/* ref로 Map 컴포넌트에 접근 */}
                 <MapSearch mapRef={mapRef} />
                 <TopButton
                     fetchToiletData={fetchToiletData} fetchToSmokeData={fetchToSmokeData}
@@ -149,7 +168,7 @@ const Home = (isAuthenticated, refreshToken, setToken, myToilet, mySmoke) => {
                 />
             </div>
 
-            <Navbar isAuthenticated = {isAuthenticated.isAuthenticated} currentPath={location.pathname} updateLocation={updateLocation} refreshToken={refreshToken} setToken={setToken}/>
+            <Navbar isAuthenticated = {isAuthenticated.isAuthenticated} currentPath={location.pathname} updateLocation={updateLocation} refreshToken={refreshToken} setToken={setToken} isTracking={isTracking} />
             {/* 바텀시트 모달 */}
             <BottomSheetModal toilet={selectedToilet} isOpen={isModalOpen} onClose={closeModal} />
         </div>

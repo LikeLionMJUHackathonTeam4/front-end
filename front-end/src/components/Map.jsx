@@ -159,7 +159,7 @@ import toiletPointIcon from '../image/toiletPoint.svg';
 import myToiletIcon from "../image/myToilet.svg";
 
 const Map = forwardRef((props, ref) => {
-  const { toilets } = props;
+  const { toilets, isTracking, stopTracking } = props;
   const [location, setLocation] = useState({ lat: 37.5665, lng: 126.9780 }); // 기본 위치 (서울)
   const [map, setMap] = useState(null);
   const [markers, setMarkers] = useState([]); // 마커 상태 관리
@@ -189,6 +189,7 @@ const Map = forwardRef((props, ref) => {
         console.error("이 브라우저는 Geolocation을 지원하지 않습니다.");
       }
     },
+
     addMarkers(toilets) {
       // 기존 마커 제거
       markers.forEach(marker => marker.setMap(null));
@@ -271,6 +272,22 @@ const Map = forwardRef((props, ref) => {
       }
     }
   }));
+
+  // 사용자가 지도를 드래그하거나 터치할 때 추적을 중지
+  useEffect(() => {
+    if (map) {
+      window.kakao.maps.event.addListener(map, 'dragstart', () => {
+        if (isTracking) {
+          stopTracking(); // 추적 중지
+        }
+      });
+      window.kakao.maps.event.addListener(map, 'touchstart', () => {
+        if (isTracking) {
+          stopTracking(); // 추적 중지
+        }
+      });
+    }
+  }, [map, isTracking, stopTracking]);
 
   useEffect(() => {
     if (window.kakao && window.kakao.maps && location) {
