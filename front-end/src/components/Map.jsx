@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useImperativeHandle, forwardRef } from "react";
+import React, { useEffect, useState, useImperativeHandle, forwardRef, useRef } from "react";
 import toiletPointIcon from '../image/toiletPoint.svg';
 import myToiletIcon from "../image/myToilet.svg";
 
@@ -8,7 +8,7 @@ const Map = forwardRef((props, ref) => {
   const [map, setMap] = useState(null);
   const [markers, setMarkers] = useState([]); // 마커 상태 관리
   const [placesService, setPlacesService] = useState(null);
-  const [currentLocationMarker, setCurrentLocationMarker] = useState(null); // 현위치 마커 상태
+  const currentLocationMarker = useRef(null); // 현위치 마커를 useRef로 관리
   const [watchId, setWatchId] = useState(null); // 위치 추적 ID 상태
 
   useImperativeHandle(ref, () => ({
@@ -29,17 +29,23 @@ const Map = forwardRef((props, ref) => {
               const moveLatLon = new window.kakao.maps.LatLng(newLocation.lat, newLocation.lng);
               map.setCenter(moveLatLon);  // 지도 중심을 새로운 위치로 이동
               // 현위치 마커가 이미 있는 경우 위치 업데이트, 없는 경우 새로 생성
-              if (currentLocationMarker) {
-                currentLocationMarker.setPosition(moveLatLon); // 기존 마커 위치 업데이트
+              if (currentLocationMarker.current) {
+                // currentLocationMarker.setPosition(moveLatLon); // 기존 마커 위치 업데이트
                 console.log("b: 마커 위치 업데이트");
+                currentLocationMarker.current.setPosition(moveLatLon);
               } else {
-                const marker = new window.kakao.maps.Marker({
+                // const marker = new window.kakao.maps.Marker({
+                //   position: moveLatLon,
+                //   map: map,
+                //   title: '현재 위치'
+                // });
+                // setCurrentLocationMarker(marker); // 새 마커 생성 후 상태 업데이트
+                console.log("a: 마커 생성");
+                currentLocationMarker.current = new window.kakao.maps.Marker({
                   position: moveLatLon,
                   map: map,
                   title: '현재 위치'
                 });
-                setCurrentLocationMarker(marker); // 새 마커 생성 후 상태 업데이트
-                console.log("a: 마커 생성");
               }
               // const marker = new window.kakao.maps.Marker({
               //   position: moveLatLon,
@@ -195,11 +201,11 @@ const Map = forwardRef((props, ref) => {
   }, [toilets, map]);
 
   // currentLocationMarker가 설정된 후 다시 위치를 업데이트
-  useEffect(() => {
-    if (currentLocationMarker) {
-      currentLocationMarker.setPosition(new window.kakao.maps.LatLng(location.lat, location.lng));
-    }
-  }, [location, currentLocationMarker]);
+  // useEffect(() => {
+  //   if (currentLocationMarker) {
+  //     currentLocationMarker.setPosition(new window.kakao.maps.LatLng(location.lat, location.lng));
+  //   }
+  // }, [location, currentLocationMarker]);
 
   useEffect(() => {
     if (window.kakao && window.kakao.maps && location) {
