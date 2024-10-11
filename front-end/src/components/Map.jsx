@@ -165,13 +165,14 @@ const Map = forwardRef((props, ref) => {
   const [markers, setMarkers] = useState([]); // 마커 상태 관리
   const [placesService, setPlacesService] = useState(null);
   const [currentLocationMarker, setCurrentLocationMarker] = useState(null); // 현위치 마커 상태
+  const [watchId, setWatchId] = useState(null); // 위치 추적 ID 상태
 
   useImperativeHandle(ref, () => ({
     updateLocation() {
       // 사용자의 현재 위치를 다시 검색
       if (navigator.geolocation) {
         // 위치 변화를 지속적으로 추적
-        const watchId = navigator.geolocation.watchPosition(
+        const newWatchId = navigator.geolocation.watchPosition(
         // navigator.geolocation.getCurrentPosition(
           (position) => {
             const newLocation = {
@@ -211,12 +212,12 @@ const Map = forwardRef((props, ref) => {
           },
           {
             enableHighAccuracy: true, // 높은 정확도로 위치 추적
-            timeout: 5000, // 5초 안에 위치 정보를 가져오지 못하면 실패
+            timeout: 10000, // 5초 안에 위치 정보를 가져오지 못하면 실패
             maximumAge: 0 // 항상 최신 정보를 가져오도록 설정
           }
         );
         // watchId를 이용해 나중에 위치 추적을 중지할 수 있음
-        return watchId;
+        setWatchId(newWatchId);
       } else {
         console.error("이 브라우저는 Geolocation을 지원하지 않습니다.");
       }
@@ -229,10 +230,9 @@ const Map = forwardRef((props, ref) => {
     },
 
     stopTracking() {
-      const watchId = localStorage.getItem('watchId');
       if (watchId) {
         navigator.geolocation.clearWatch(watchId); // 추적 중지
-        localStorage.removeItem('watchId');
+        setWatchId(null); // watchId 초기화
       }
     },
     
@@ -388,11 +388,11 @@ const Map = forwardRef((props, ref) => {
         const places = new window.kakao.maps.services.Places();
         setPlacesService(places);
   
-        // 현재 위치에 마커 표시
-        new window.kakao.maps.Marker({
-          position: new window.kakao.maps.LatLng(location.lat, location.lng),
-          map: mapInstance,
-        });
+        // // 현재 위치에 마커 표시
+        // new window.kakao.maps.Marker({
+        //   position: new window.kakao.maps.LatLng(location.lat, location.lng),
+        //   map: mapInstance,
+        // });
       } else {
         // 지도 인스턴스가 이미 있을 경우 위치만 업데이트
         const moveLatLon = new window.kakao.maps.LatLng(location.lat, location.lng);
