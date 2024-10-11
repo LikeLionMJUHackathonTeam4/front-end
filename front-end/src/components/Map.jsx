@@ -313,7 +313,7 @@ const Map = forwardRef((props, ref) => {
   }, [location]);
 
   return (
-    <div id="mapContainer" style={{ width: "100%", height: "100vh" }}></div>
+    <div id="mapContainer" style={{ width: "100%", height: "100vh", position: "relative" }}></div>
   );
 });
 
