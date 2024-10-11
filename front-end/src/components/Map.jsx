@@ -186,8 +186,10 @@ const Map = forwardRef((props, ref) => {
               map.setCenter(moveLatLon);  // 지도 중심을 새로운 위치로 이동
               // 현위치 마커가 이미 있는 경우 위치 업데이트, 없는 경우 새로 생성
               if (currentLocationMarker) {
+                console.log("b");
                 currentLocationMarker.setPosition(moveLatLon); // 기존 마커 위치 업데이트
               } else {
+                console.log("a");
                 const marker = new window.kakao.maps.Marker({
                   position: moveLatLon,
                   map: map,
