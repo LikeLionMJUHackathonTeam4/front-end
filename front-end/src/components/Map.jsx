@@ -196,6 +196,7 @@ const Map = forwardRef((props, ref) => {
                   title: '현재 위치'
                 });
                 setCurrentLocationMarker(marker); // 새 마커 생성 후 상태 업데이트
+                marker.setPosition(moveLatLon);  // 상태값 대신 로컬 변수로 마커 위치 업데이트
               }
               // const marker = new window.kakao.maps.Marker({
               //   position: moveLatLon,
