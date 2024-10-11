@@ -135,13 +135,18 @@ const Home = (isAuthenticated, refreshToken, setToken, myToilet, mySmoke) => {
     // 위치 재검색 함수
     const updateLocation = () => {
         if (mapRef.current) {
-            mapRef.current.updateLocation(); // Map 컴포넌트의 updateLocation 호출
+            const watchId = mapRef.current.updateLocation(); // 위치 추적 시작
             setIsTracking(true); // 위치 추적 시작
+            localStorage.setItem('watchId', watchId); // watchId 저장
         }
     };
 
+    // 추적 중지 함수
     const stopTracking = () => {
-        setIsTracking(false); // 위치 추적 중지
+        if (mapRef.current) {
+            mapRef.current.stopTracking(); // 추적 중지
+            setIsTracking(false);
+        }
     };
 
     // 사용자가 지도를 이동할 때 추적을 중지하는 함수

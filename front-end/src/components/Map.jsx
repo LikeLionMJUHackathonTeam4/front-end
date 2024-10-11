@@ -169,7 +169,9 @@ const Map = forwardRef((props, ref) => {
     updateLocation() {
       // 사용자의 현재 위치를 다시 검색
       if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
+        // 위치 변화를 지속적으로 추적
+        const watchId = navigator.geolocation.watchPosition(
+        // navigator.geolocation.getCurrentPosition(
           (position) => {
             const newLocation = {
               lat: position.coords.latitude,
@@ -193,8 +195,15 @@ const Map = forwardRef((props, ref) => {
           },
           (err) => {
             console.error("위치를 가져오는 중 오류 발생: ", err);
+          },
+          {
+            enableHighAccuracy: true, // 높은 정확도로 위치 추적
+            timeout: 5000, // 5초 안에 위치 정보를 가져오지 못하면 실패
+            maximumAge: 0 // 항상 최신 정보를 가져오도록 설정
           }
         );
+        // watchId를 이용해 나중에 위치 추적을 중지할 수 있음
+        return watchId;
       } else {
         console.error("이 브라우저는 Geolocation을 지원하지 않습니다.");
       }
@@ -204,6 +213,14 @@ const Map = forwardRef((props, ref) => {
     addMarkers(toilets) {
       // 외부에서 호출할 수 있도록 addMarkers를 포함
       addMarkers(toilets);
+    },
+
+    stopTracking() {
+      const watchId = localStorage.getItem('watchId');
+      if (watchId) {
+        navigator.geolocation.clearWatch(watchId); // 추적 중지
+        localStorage.removeItem('watchId');
+      }
     },
     
     searchPlace(keyword) {
