@@ -258,6 +258,22 @@ const Map = forwardRef((props, ref) => {
     };
   }, [watchId]);
 
+  // 주기적으로 위치 추적 중지 및 재시작
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (watchId) {
+        navigator.geolocation.clearWatch(watchId); 
+        ref.current.updateLocation(); 
+      }
+    }, 180000); // 3분마다 위치 추적 중지 및 재시작
+
+    setIntervalId(interval);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [watchId]);
+
   return (
     <div id="mapContainer" style={{ width: "100%", height: "100vh" }}></div>
   );
