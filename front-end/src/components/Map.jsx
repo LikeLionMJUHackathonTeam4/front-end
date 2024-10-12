@@ -238,6 +238,26 @@ const Map = forwardRef((props, ref) => {
     }
   }, [location, map, toilets]);
 
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'hidden') {
+        // 앱이 백그라운드로 전환될 때 위치 추적을 중지
+        if (watchId) {
+          navigator.geolocation.clearWatch(watchId); // 위치 추적 중지
+        }
+      } else if (document.visibilityState === 'visible') {
+        // 다시 포그라운드로 돌아왔을 때 위치 추적 시작
+        ref.current.updateLocation(); // 위치 추적 다시 시작
+      }
+    };
+  
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  }, [watchId]);
+
   return (
     <div id="mapContainer" style={{ width: "100%", height: "100vh" }}></div>
   );
