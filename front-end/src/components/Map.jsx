@@ -65,7 +65,7 @@ const Map = forwardRef((props, ref) => {
           {
             enableHighAccuracy: true, // 높은 정확도로 위치 추적
             timeout: 10000, // 5초 안에 위치 정보를 가져오지 못하면 실패
-            maximumAge: 0 // 항상 최신 정보를 가져오도록 설정
+            maximumAge: 5000 // 항상 최신 정보를 가져오도록 설정
           }
         );
         // watchId를 이용해 나중에 위치 추적을 중지할 수 있음
