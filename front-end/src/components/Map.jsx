@@ -214,9 +214,9 @@ const Map = forwardRef((props, ref) => {
 
       return () => {
         // 컴포넌트가 언마운트될 때 이벤트 리스너와 마커 제거
-        if (currentLocationMarker.current) {
-          currentLocationMarker.current.setMap(null); // 현위치 마커 제거
-        }
+        // if (currentLocationMarker.current) {
+        //   currentLocationMarker.current.setMap(null); // 현위치 마커 제거
+        // }
         window.kakao.maps.event.removeListener(map, 'dragstart', handleDragStart);
         window.kakao.maps.event.removeListener(map, 'touchstart', handleDragStart);
       };
