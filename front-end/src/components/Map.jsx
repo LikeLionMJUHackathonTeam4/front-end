@@ -11,6 +11,7 @@ const Map = forwardRef((props, ref) => {
   const currentLocationMarker = useRef(null); // 현위치 마커를 useRef로 관리
   const [watchId, setWatchId] = useState(null); // 위치 추적 ID 상태
   const [intervalId, setIntervalId] = useState(null); // 위치 추적 중지 및 재개 간격
+  const [forceCenter, setForceCenter] = useState(false); // 현위치를 강제로 중앙에 맞추는 상태
 
   // 거리 계산 함수 (두 지점 간의 거리 계산)
   const calculateDistance = (lat1, lng1, lat2, lng2) => {
@@ -30,7 +31,7 @@ const Map = forwardRef((props, ref) => {
   };
 
   useImperativeHandle(ref, () => ({
-    updateLocation() {
+    updateLocation(force = false) {
       // 사용자의 현재 위치를 다시 검색
       if (navigator.geolocation) {
         // 위치 변화를 지속적으로 추적
@@ -43,7 +44,7 @@ const Map = forwardRef((props, ref) => {
             };
 
             // 이전 위치와 비교해 일정 거리 이상 이동했을 때만 업데이트
-            if (calculateDistance(location.lat, location.lng, newLocation.lat, newLocation.lng) > 10) {
+            if (force || calculateDistance(location.lat, location.lng, newLocation.lat, newLocation.lng) > 10) {
               setLocation(newLocation);
             
               if (map) {
@@ -80,12 +81,6 @@ const Map = forwardRef((props, ref) => {
                 // });
               }
             }
-            else {
-              if(map) {
-                const moveLatLon = new window.kakao.maps.LatLng(location.lat, location.lng);
-                map.setCenter(moveLatLon);
-              }
-            }
           },
           (err) => {
             console.error("위치를 가져오는 중 오류 발생: ", err);
@@ -114,6 +109,12 @@ const Map = forwardRef((props, ref) => {
         navigator.geolocation.clearWatch(watchId); // 추적 중지
         setWatchId(null); // watchId 초기화
       }
+    },
+
+    // 사용자가 GPS 버튼을 눌렀을 때 호출되는 함수
+    centerMapOnCurrentLocation() {
+      setForceCenter(true);  // 강제로 지도 중심에 맞추도록 설정
+      ref.current.updateLocation(true);  // 강제 지도 중심 맞추기
     },
     
     searchPlace(keyword) {

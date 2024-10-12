@@ -135,7 +135,7 @@ const Home = (isAuthenticated, refreshToken, setToken, myToilet, mySmoke) => {
     // 위치 재검색 함수
     const updateLocation = () => {
         if (mapRef.current) {
-            const watchId = mapRef.current.updateLocation(); // 위치 추적 시작
+            const watchId = mapRef.current.updateLocation(true); // 위치 추적 시작
             setIsTracking(true); // 위치 추적 시작
             // localStorage.setItem('watchId', watchId); // watchId 저장
         }
