@@ -201,42 +201,42 @@ const Map = forwardRef((props, ref) => {
   };
 
   // 사용자가 지도를 드래그하거나 터치할 때 추적을 중지
-  useEffect(() => {
-    if (map) {
-      window.kakao.maps.event.addListener(map, 'dragstart', () => {
-        if (isTracking) {
-          stopTracking(); // 추적 중지
-        }
-      });
-      window.kakao.maps.event.addListener(map, 'touchstart', () => {
-        if (isTracking) {
-          stopTracking(); // 추적 중지
-        }
-      });
-    }
-  }, [map, isTracking, stopTracking]);
-
   // useEffect(() => {
   //   if (map) {
-  //     const handleDragStart = () => {
+  //     window.kakao.maps.event.addListener(map, 'dragstart', () => {
   //       if (isTracking) {
   //         stopTracking(); // 추적 중지
   //       }
-  //     };
-
-  //     window.kakao.maps.event.addListener(map, 'dragstart', handleDragStart);
-  //     window.kakao.maps.event.addListener(map, 'touchstart', handleDragStart);
-
-  //     return () => {
-  //       // 컴포넌트가 언마운트될 때 이벤트 리스너와 마커 제거
-  //       // if (currentLocationMarker.current) {
-  //       //   currentLocationMarker.current.setMap(null); // 현위치 마커 제거
-  //       // }
-  //       window.kakao.maps.event.removeListener(map, 'dragstart', handleDragStart);
-  //       window.kakao.maps.event.removeListener(map, 'touchstart', handleDragStart);
-  //     };
+  //     });
+  //     window.kakao.maps.event.addListener(map, 'touchstart', () => {
+  //       if (isTracking) {
+  //         stopTracking(); // 추적 중지
+  //       }
+  //     });
   //   }
   // }, [map, isTracking, stopTracking]);
+
+  useEffect(() => {
+    if (map) {
+      const handleDragStart = () => {
+        if (isTracking) {
+          stopTracking(); // 추적 중지
+        }
+      };
+
+      window.kakao.maps.event.addListener(map, 'dragstart', handleDragStart);
+      window.kakao.maps.event.addListener(map, 'touchstart', handleDragStart);
+
+      return () => {
+        // 컴포넌트가 언마운트될 때 이벤트 리스너와 마커 제거
+        // if (currentLocationMarker.current) {
+        //   currentLocationMarker.current.setMap(null); // 현위치 마커 제거
+        // }
+        window.kakao.maps.event.removeListener(map, 'dragstart', handleDragStart);
+        window.kakao.maps.event.removeListener(map, 'touchstart', handleDragStart);
+      };
+    }
+  }, [map, isTracking, stopTracking]);
 
   useEffect(() => {
     if (map && Array.isArray(toilets) && toilets.length > 0) {
