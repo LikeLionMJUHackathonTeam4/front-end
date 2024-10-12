@@ -80,6 +80,12 @@ const Map = forwardRef((props, ref) => {
                 // });
               }
             }
+            else {
+              if(map) {
+                const moveLatLon = new window.kakao.maps.LatLng(location.lat, location.lng);
+                map.setCenter(moveLatLon);
+              }
+            }
           },
           (err) => {
             console.error("위치를 가져오는 중 오류 발생: ", err);
@@ -232,11 +238,11 @@ const Map = forwardRef((props, ref) => {
         // if (currentLocationMarker.current) {
         //   currentLocationMarker.current.setMap(null); // 현위치 마커 제거
         // }
-        const newLocation = {
-          lat: 37.5665,
-          lng: 126.9780
-        };
-        setLocation(location);
+        // const newLocation = {
+        //   lat: 37.5665,
+        //   lng: 126.9780
+        // };
+        // setLocation(location);
         window.kakao.maps.event.removeListener(map, 'dragstart', handleDragStart);
         window.kakao.maps.event.removeListener(map, 'touchstart', handleDragStart);
       };
