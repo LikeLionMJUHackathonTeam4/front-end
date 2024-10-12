@@ -10,6 +10,7 @@ const Map = forwardRef((props, ref) => {
   const [placesService, setPlacesService] = useState(null);
   const currentLocationMarker = useRef(null); // 현위치 마커를 useRef로 관리
   const [watchId, setWatchId] = useState(null); // 위치 추적 ID 상태
+  const [intervalId, setIntervalId] = useState(null); // 위치 추적 중지 및 재개 간격
 
   useImperativeHandle(ref, () => ({
     updateLocation() {
