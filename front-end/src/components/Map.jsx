@@ -296,13 +296,6 @@ const Map = forwardRef((props, ref) => {
     };
   }, [watchId]);
 
-  useEffect(() => {
-    if (location.lat !== previousLat || location.lng !== previousLng) {
-      // 위치가 실제로 변경된 경우에만 상태 업데이트
-      setLocation(newLocation);
-    }
-  }, [location]);
-
   return (
     <div id="mapContainer" style={{ width: "100%", height: "100vh" }}></div>
   );
