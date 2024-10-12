@@ -232,6 +232,11 @@ const Map = forwardRef((props, ref) => {
         // if (currentLocationMarker.current) {
         //   currentLocationMarker.current.setMap(null); // 현위치 마커 제거
         // }
+        const newLocation = {
+          lat: 37.5665,
+          lng: 126.9780
+        };
+        setLocation(location);
         window.kakao.maps.event.removeListener(map, 'dragstart', handleDragStart);
         window.kakao.maps.event.removeListener(map, 'touchstart', handleDragStart);
       };
