@@ -173,6 +173,11 @@ function App() {
         // Kakao 지도 API 스크립트를 비동기로 로드
         const loadKakaoMapScript = () => {
             return new Promise((resolve, reject) => {
+                if (window.kakao && window.kakao.maps) {  // 이미 Kakao API가 로드되었는지 확인
+                    resolve();
+                    return;
+                }
+
                 const kakaoAppKey = import.meta.env.VITE_KAKAO_APP_KEY;
                 const script = document.createElement('script');
                 script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${kakaoAppKey}&autoload=false&libraries=services`;  // autoload=false 옵션 사용
