@@ -1,9 +1,8 @@
 # 흡변구역 프론트엔드 프로젝트
 2024 멋쟁이사자처럼 12기 중앙 해커톤, 어흥콘 출품작
 
-https://oh-my-stomach.vercel.app/
-</br>
-https://www.smoilet.site/
+[서비스 링크](https://www.smoilet.site/)
+[대체 링크](https://oh-my-stomach.vercel.app/)
 
 </br>
 
